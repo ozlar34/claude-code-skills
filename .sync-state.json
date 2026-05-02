@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "synced_at": "2026-05-02T21:36:43Z",
+  "skills": {
+    "find-print": {
+      "sha256": "9749664ae4ddb4360373d19137a86759a5723853aee463d6ccfd67cad892dbeb"
+    },
+    "sell": {
+      "sha256": "95e958e084b5705d86d731163b50a1c30793ceb1de648b50d8e0183f36aa4f23"
+    },
+    "claude-inbox": {
+      "sha256": "5453957551e6fb0e70df06aa13fbbbb3c9ec3cee2f665c2a49d0ce33cdf1fc2d"
+    },
+    "session-handoff": {
+      "sha256": "eb1060560d4b90fb251b6c0e40c63e9e34acf395c589ce5521d401bd942d13c8"
+    },
+    "clippings": {
+      "sha256": "d235069020041fa47813e947efc14aa21619e032dd8dae32fe42f851eb363455"
+    },
+    "coffee": {
+      "sha256": "990295cb3a221635d3df447b3b5489aecb8bbcade4e0a42de8c8ffa27d4bf0ff"
+    },
+    "gaming": {
+      "sha256": "c60126e12459475f4c3df01dc3807220f183cdf5b36ed7b9bdb9e4df1bcf1a23"
+    },
+    "watch": {
+      "sha256": "166e2dab9d4e206472f236cfed65371518e54e60f7ecda2e990226c1d942f8cc"
+    },
+    "log-reel": {
+      "sha256": "d95da88fe9f068d30f3c68d53d96074deb2c7a81e9421bbc467cc4423cf58ab5"
+    }
+  }
+}
