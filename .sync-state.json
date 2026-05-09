@@ -2,9 +2,6 @@
   "version": 1,
   "synced_at": "2026-05-02T21:36:43Z",
   "skills": {
-    "find-print": {
-      "sha256": "9749664ae4ddb4360373d19137a86759a5723853aee463d6ccfd67cad892dbeb"
-    },
     "sell": {
       "sha256": "95e958e084b5705d86d731163b50a1c30793ceb1de648b50d8e0183f36aa4f23"
     },

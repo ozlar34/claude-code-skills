@@ -1,6 +1,6 @@
 # Claude Code Skills
 
-A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built for my own stack — Obsidian, Notion, NotebookLM, 3D printing, and a few general-purpose utilities.
+A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built for my own stack — Obsidian, Notion, NotebookLM, and a few general-purpose utilities.
 
 Skills are markdown files under `~/.claude/skills/` that Claude Code auto-loads and triggers on natural-language matches. They let you turn repeated workflows into one-shot voice/text commands.
 
@@ -19,7 +19,6 @@ This repo splits skills into two folders by how reusable they actually are.
 
 | Skill | Category | One-liner |
 |---|---|---|
-| [`find-print`](./source/find-print) | 3D printing | Searches MakerWorld + Printables, filters by community-validation thresholds, and presents the top picks for a printer-aware request. |
 | [`sell`](./source/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
 | [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`session-handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
@@ -38,7 +37,6 @@ This repo splits skills into two folders by how reusable they actually are.
 
 ```bash
 # Pick one
-cp -r source/find-print ~/.claude/skills/
 cp -r source/sell ~/.claude/skills/
 cp -r source/claude-inbox ~/.claude/skills/
 cp -r source/session-handoff ~/.claude/skills/
