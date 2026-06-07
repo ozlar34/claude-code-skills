@@ -20,7 +20,7 @@ PHOTOS_DIR    : ~/projects/sell-bot/items/photos
 DEFAULT_ZIP   : <YOUR_5_DIGIT_GERMAN_ZIP>
 ```
 
-`ITEMS_DIR` and `PHOTOS_DIR` can be anywhere you want. `DEFAULT_ZIP` should be your usual 5-digit listing ZIP (e.g. `10409` for Berlin Prenzlauer Berg). The skill always asks for confirmation, so this is a default, not a hard lock.
+`ITEMS_DIR` and `PHOTOS_DIR` can be anywhere you want. `DEFAULT_ZIP` should be your usual 5-digit listing ZIP (e.g. `10115` for Berlin Mitte). The skill always asks for confirmation, so this is a default, not a hard lock.
 
 ```bash
 mkdir -p ~/projects/sell-bot/items/photos

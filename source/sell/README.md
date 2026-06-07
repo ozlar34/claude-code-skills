@@ -24,7 +24,7 @@ The skill stops one click before publish — you click `Anzeige aufgeben` yourse
 > | Preistyp | Festpreis | fixed price |
 > | Zustand | Sehr Gut | like new |
 > | Versand | Nur Abholung | pickup only |
-> | PLZ | 10409 | 10409 |
+> | PLZ | 10115 | 10115 |
 > | Photos | 4 uploaded | 4 uploaded |
 >
 > Click Vorschau (preview) or Anzeige aufgeben (publish) yourself.

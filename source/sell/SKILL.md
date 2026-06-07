@@ -57,7 +57,7 @@ condition: "like-new"
 kleinanzeigen:
   category_path: ["Elektronik", "...", "..."]
   shipping: false
-  location_zip: "10409"
+  location_zip: "10115"
 
 description: |
   ...
