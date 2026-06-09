@@ -1,3 +1,5 @@
+![claude-code-skills — Claude Code skills built for my own stack](docs/banner.png)
+
 # Claude Code Skills
 
 A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built for my own stack — Obsidian, Notion, NotebookLM, and a few general-purpose utilities.
