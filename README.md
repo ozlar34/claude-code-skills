@@ -13,7 +13,7 @@ This repo splits skills into two folders by how reusable they actually are.
 | Folder | What it is | When to use |
 |---|---|---|
 | [`source/`](./source) | Sanitized, runnable skills. Copy a directory into `~/.claude/skills/` and follow the per-skill `SETUP.md`. | Genuinely portable — they don't assume anything about your private databases or APIs. |
-| [`showcase/`](./showcase) | Pattern walkthroughs only. No source code. | Skills tightly coupled to my private Notion databases. The architecture and prompt design are the interesting parts; you'd rebuild against your own data anyway. |
+| [`showcase/`](./showcase) | Pattern walkthroughs only. No source code. | Skills tightly coupled to my private setup — Notion databases, my Obsidian vault, my task manager, my brand assets. The architecture and prompt design are the interesting parts; you'd rebuild against your own data anyway. |
 
 ## Catalog
 
@@ -32,8 +32,11 @@ This repo splits skills into two folders by how reusable they actually are.
 |---|---|---|
 | [`coffee`](./showcase/coffee.md) | Notion | Coffee bean inventory + brew log + recipe index across three Notion databases. Captures faults as a separate axis from descriptive flavor notes. |
 | [`gaming`](./showcase/gaming.md) | Notion | Video game library with auto-applied date side-effects (`Currently Playing` sets Date Started; `Complete` sets Date Finished). |
-| [`watch`](./showcase/watch.md) | Notion | Watch wishlist. Web-search-driven spec extraction into a typed Notion entry. |
+| [`add-watch`](./showcase/add-watch.md) | Notion | Watch wishlist. Web-search-driven spec extraction into a typed Notion entry. |
 | [`log-reel`](./showcase/log-reel.md) | Notion | Ship-time logger for shipped content. Closes the gap between publish and tracker — dedupes against in-progress entries. |
+| [`triage`](./showcase/triage.md) | Obsidian / capture | Inbox triage with a `promote → flip → destruct` atomicity loop, a zero-write `hold` verdict, and a propose-then-review split (parallel per-item agents propose, a gated review pass executes). |
+| [`pack-trip`](./showcase/pack-trip.md) | TickTick / vault | Per-trip packing checklist from a canonical template — asks only the per-trip deltas, computes a clothing formula, writes one task with the items as a checklist. |
+| [`github-polish`](./showcase/github-polish.md) | GitHub automation | One mostly-autonomous pass to make a public repo recruiter-ready: metadata, README, branded card + banner. Hard CLI/UI boundary, honest-handback, no faked assets. |
 
 ## Install (source skills)
 
@@ -51,9 +54,9 @@ Restart Claude Code (or open a new session). The skill auto-surfaces — invoke 
 
 ## Why no source for showcase skills?
 
-The four showcase skills hardcode my private Notion database IDs, page IDs, and select-option enums. Sanitizing them into runnable templates means writing a `SETUP.md` that walks you through recreating my exact Notion schema property-by-property — which nobody is going to do, and which would still leave you debugging type mismatches against your own data.
+The showcase skills are wired into my private setup — Notion database/page IDs and select-option enums, my Obsidian vault layout, my task-manager project, my brand-asset templates. Sanitizing them into runnable templates means writing a `SETUP.md` that walks you through recreating my exact schema/vault/config piece-by-piece — which nobody is going to do, and which would still leave you debugging mismatches against your own data.
 
-What's actually useful from those skills is the *pattern*: schema-first MCP calls, status-driven date side-effects, dedup-before-create, fault tags as a separate axis from descriptive tags, ship-time capture vs post-hoc backfill. Those are documented in each `showcase/<name>.md` walkthrough.
+What's actually useful from those skills is the *pattern*: schema-first MCP calls, status-driven date side-effects, dedup-before-create, fault tags as a separate axis from descriptive tags, ship-time capture vs post-hoc backfill, `promote → flip → destruct` atomicity, propose-then-review with parallel per-item agents, and an honest CLI/UI boundary for autonomous automation. Those are documented in each `showcase/<name>.md` walkthrough.
 
 ## More
 

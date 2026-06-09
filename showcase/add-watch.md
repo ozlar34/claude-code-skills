@@ -1,4 +1,4 @@
-# watch
+# add-watch
 
 **Status:** Showcase only. Source not published — hardcodes a Notion database ID and a curated brand/style/price-range select enum unique to my wishlist.
 
@@ -33,7 +33,7 @@ Page icon is always `⌚` — non-negotiable, set on creation.
 
 ## Skill workflow
 
-> User: "/watch Longines L1.611.4.78.6"
+> User: "/add-watch Longines L1.611.4.78.6"
 >
 > or
 >
