@@ -1,11 +1,11 @@
 ---
-name: clippings
-description: Process a Web Clippings inbox (e.g. Obsidian Web Clipper output) one item at a time. Analyze each, recommend an action (act, save, backlog, ignore), execute on confirmation, then delete the clipping. GTD-style triage for captured articles and YouTube transcripts.
-trigger: clippings OR triage OR process-clippings OR process clippings
+name: triage
+description: Triage a captured-clippings inbox (e.g. Obsidian Web Clipper output) one item at a time. Analyze each, recommend an action (act, save, backlog, ignore), execute on confirmation, then delete the clipping. GTD-style triage for captured articles and YouTube transcripts.
+trigger: triage OR clippings OR process-clippings OR process clippings
 allowed-tools: Bash,Read,Write,Edit,Glob,Grep
 ---
 
-# Clippings — Web Clippings Inbox Processor
+# Triage — Captured-Clippings Inbox Processor
 
 Process a folder of captured articles / YouTube transcripts using GTD methodology: one item at a time, analyze, decide, execute, delete.
 

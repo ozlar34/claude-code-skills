@@ -1,14 +1,14 @@
-# Setup — clippings
+# Setup — triage
 
 ## 1. Install
 
 ```bash
-cp -r clippings ~/.claude/skills/
+cp -r triage ~/.claude/skills/
 ```
 
 ## 2. Configure your inbox path
 
-Open `~/.claude/skills/clippings/SKILL.md` and edit the **Configuration** block:
+Open `~/.claude/skills/triage/SKILL.md` and edit the **Configuration** block:
 
 ```
 CLIPPINGS_DIR : <ABSOLUTE_PATH_TO_INBOX>
@@ -50,7 +50,7 @@ If you have neither, the skill still works — it just becomes "TL;DR + decide +
 
 Pick something to clip from your browser. Make sure it lands in `CLIPPINGS_DIR`. Then:
 
-> /clippings
+> /triage
 
 If the folder is empty, the skill says "You have 0 clippings" and stops — zero overhead.
 

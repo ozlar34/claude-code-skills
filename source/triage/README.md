@@ -1,6 +1,6 @@
-# clippings
+# triage
 
-**Trigger:** "/clippings", "process clippings", "triage clippings"
+**Trigger:** "/triage", "process clippings", "triage clippings" (`clippings` kept as an alias)
 
 **What it does:** Walks a folder of captured articles and YouTube transcripts (typically the output of a browser web-clipper extension) one file at a time. For each: writes a TL;DR, an honest assessment of whether it actually connects to the user's active work, and a recommended action — act on it, save it somewhere persistent, send it to a backlog, or ignore. Executes the chosen routing on confirmation and deletes the source file.
 
@@ -10,7 +10,7 @@ The folder acts as a triage queue. The skill keeps the queue trustworthy: items 
 
 **Example:**
 
-> User: /clippings
+> User: /triage
 >
 > Skill: You have 4 clippings to process.
 >
