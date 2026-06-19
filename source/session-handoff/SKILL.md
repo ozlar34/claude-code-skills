@@ -1,25 +1,18 @@
 ---
 name: session-handoff
-description: Generate a structured mid-session handoff block when context grows hot (~120k tokens on Opus 1M, ~60% on 200k models). Use when the user invokes /session-handoff, or proactively suggest when context monitor warns and work is mid-stream. Persists to ~/.claude/handoffs/ and copies to clipboard so a fresh session can resume without losing state. Supports `--minimal` for ~80-token emergency mode when context is already critical.
+description: Generate a structured mid-session handoff block. Use only when the user explicitly invokes /session-handoff. Persists to ~/.claude/handoffs/ and copies to clipboard so a fresh session can resume without losing state. Supports `--minimal` for a ~80-token bare-bones block.
 ---
 
 # Session Handoff
 
-Mid-session reset tool. Distinct from:
-- `/done` — end-of-session wrap-up (closing for the day)
-- `/gsd-pause-work` — GSD-phase-specific checkpoint (preferred when a `.planning/` phase is active; see Step 2a)
-- `/gsd-session-report` — retrospective telemetry
-
-Use **session-handoff** when: context is hot, work is mid-stream, a `/clear` is needed but the conversation holds state that isn't yet on disk.
+Mid-session reset. Distinct from: `/done` (end-of-day), `/gsd-pause-work` (active GSD phase — prefer that; see Step 2a), `/gsd-session-report` (retrospective telemetry). Use when context is hot, a `/clear` is needed, and conversation state isn't yet on disk.
 
 Persisted handoffs live at `~/.claude/handoffs/<currentDate>-<HHMM>.md`, with `latest.md` as a pinned copy. A SessionStart hook surfaces `latest.md` if <2h old, so the next session finds it automatically.
 
 ## Modes
 
 - **default** — full structured handoff. Sections render only when they have content.
-- **`--minimal`** — ~80-token bare-bones block: situation + next action + not-on-disk prose. Use when:
-  - The user passes the flag explicitly, OR
-  - the context monitor is at "critical" (≤25% remaining) — at that point, even the regular block is too expensive. Recommend minimal in one line and let the user confirm.
+- **`--minimal`** — ~80-token bare-bones block: situation + next action + not-on-disk prose. Use when the user passes the flag explicitly.
 
 ## Steps
 
@@ -41,30 +34,22 @@ The date (`YYYY-MM-DD`) comes from `currentDate` in the session reminder — don
 
 **Conversation side — the cognitive step. This is the value of the handoff.**
 
-Walk this checklist explicitly. Each bucket maps to a tag or section in the block:
+Walk this checklist. Each bucket maps to a tag or section in the block:
 
-| # | Bucket | Renders as |
-|---|---|---|
-| 1 | **decisions** — concrete choices locked this session | "Decisions locked" section |
-| 2 | **mcp-writes** — external writes still in flight (Notion / TickTick / NotebookLM / Actual Budget drafts not pushed) | At-risk row, tag `[mcp]` |
-| 3 | **vault-writes** — Obsidian vault writes drafted in chat but not yet appended/created (direct `Write`, `obsidian-write`, or content destined for `CONTEXT.md` / `_decisions-log.md` / a hub / an atomic note) | At-risk row, tag `[vault]` |
-| 4 | **memory-pending** — memory writes the user asked for but NOT yet saved to `MEMORY.md` or memory files | At-risk row, tag `[memory]` |
-| 5 | **open-Qs** — user-facing decisions waiting on the user's input | "Open questions" section |
-| 6 | **deferred** — "do X then Y" — X done, Y still pending | At-risk row, tag `[deferred]` |
-
-If you skip this scan, the handoff is just a `git status` paraphrase — useless.
+- `[mcp]` **mcp-writes**: Notion/TickTick/NotebookLM/Actual Budget drafts not yet pushed → At-risk row
+- `[vault]` **vault-writes**: Obsidian writes drafted in chat, not yet appended (CONTEXT.md, _decisions-log.md, hub, atomic note) → At-risk row
+- `[memory]` **memory-pending**: memory rules discussed but not yet saved to MEMORY.md → At-risk row
+- `[deferred]` **deferred**: Y from "do X then Y" still pending → At-risk row
+- **decisions**: concrete choices locked this session → "Decisions locked" section
+- **open-Qs**: decisions waiting on the user's input → "Open questions" section
 
 ### 2. Decide path
 
 **2a. Active GSD phase? → delegate to `/gsd-pause-work`.**
 
-Detection from Step 1's `=== planning ===` block: a `.planning/phase-*/PLAN.md` exists and the same directory has no `SUMMARY.md` (= phase active, not yet completed).
+Detection: `PLAN.md` exists in `.planning/phase-*/` but no `SUMMARY.md` in the same dir = phase active.
 
-If yes, stop. Output one line:
-
-> "Active GSD phase detected at `<path>`. `/gsd-pause-work` is phase-aware and produces `PAUSE.md` that integrates with the GSD resume flow. Use that instead, or confirm to proceed with session-handoff anyway."
-
-Wait for confirmation. Don't silently produce a parallel handoff that competes with `PAUSE.md`. If the user says "proceed anyway" (e.g., for a generic cross-project handoff), continue.
+If yes, stop and output: "Active GSD phase at `<path>`. Use `/gsd-pause-work` (phase-aware, produces PAUSE.md) — or confirm to proceed with session-handoff." Don't continue until confirmed; don't silently produce a parallel handoff.
 
 **2b. Pick mode.**
 
@@ -81,7 +66,7 @@ Format below. **Sections with count = 0 are omitted entirely.** Situation, the `
 # Session Handoff — <currentDate> <HH:MM>
 
 **CWD:** <absolute path>
-**Project:** <<project> | ~/projects/<name> | GSD phase N | other>
+**Project:** <project-name | ~/projects/<name> | GSD phase N | other>
 **Git:** <branch>, <N> modified, <M> untracked, last commit <sha7> "<subject>"
 **Checked:** decisions(<n>) at-risk(<n>) open-Qs(<n>)
 
@@ -93,16 +78,16 @@ Format below. **Sections with count = 0 are omitted entirely.** Situation, the `
 
 ## At-risk state
 <Tagged rows. Each row: [tag] context: action needed.>
-- [mcp] <Notion / TickTick / NotebookLM / Actual Budget — what's drafted but not pushed>
-- [vault] <Obsidian write drafted in chat but not yet appended — CONTEXT.md / _decisions-log.md / hub / atomic note>
-- [memory] <memory rule discussed but not saved>
-- [deferred] <Y from "do X then Y" still pending; what it needs>
+- [mcp] <what's drafted but not pushed>
+- [vault] <write drafted in chat but not yet appended>
+- [memory] <memory rule not yet saved>
+- [deferred] <Y pending; what it needs>
 
 ## Open questions
 <Decisions waiting on the user's input>
 
 ## Pick up from here
-1. **Re-read first:** <absolute paths — GSD phase files, scratch notes, CLAUDE.md additions, modified vault notes. If the session touched vault state, include `CONTEXT.md` and/or `_Dashboard/_decisions-log.md` explicitly — they're the canonical state surfaces, easy to forget.>
+1. **Re-read first:** <absolute paths; include CONTEXT.md/_decisions-log.md if vault state changed>
 2. **Next action:** <one sentence — exact first task for the new session>
 3. **Context not captured in files:** <anything in this conversation but nowhere on disk — prose>
 ```
@@ -142,10 +127,7 @@ After the clipboard copy, STOP. Do not continue working. Do not ask "what next?"
 
 ## Style rules
 
-- **Disk first, clipboard second.** `latest.md` is the canonical record; clipboard is the fast path. If clipboard is lost, the file isn't.
-- **Paths absolute, not relative.** The next session may have a different CWD or none at all.
-- **Render only what has content.** The `**Checked:**` line is the audit trail. Empty sections cost tokens for no info.
 - **One section per question.** "What isn't landed?" → at-risk. "What was decided?" → decisions. "What's blocked on the user?" → open-Qs. Don't fragment.
-- **"Context not captured" / "Not on disk" is the most important field in either mode.** What was said in this conversation that isn't in any file?
+- **"Context not captured" / "Not on disk" is the most important field in either mode.** What did the user say in this conversation that isn't in any file?
 - **Don't editorialize.** Next-session-you doesn't need commentary, just pointers.
 - **Don't re-list files.** The `**Git:**` header line + `git status` in the next session beats any table.
