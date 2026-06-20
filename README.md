@@ -6,6 +6,8 @@ A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built
 
 Skills are markdown files under `~/.claude/skills/` that Claude Code auto-loads and triggers on natural-language matches. They let you turn repeated workflows into one-shot voice/text commands.
 
+Source skills are packaged for reuse: copy the directory, fill in the `SETUP.md` placeholders, and they run without depending on my private config.
+
 ## Two tiers
 
 This repo splits skills into two folders by how reusable they actually are.
