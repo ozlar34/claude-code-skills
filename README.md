@@ -2,7 +2,7 @@
 
 # Claude Code Skills
 
-A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built for my own stack — Obsidian, Notion, NotebookLM, and a few general-purpose utilities.
+A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built for my own stack — Obsidian, Notion, and a few general-purpose utilities.
 
 Skills are markdown files under `~/.claude/skills/` that Claude Code auto-loads and triggers on natural-language matches. They let you turn repeated workflows into one-shot voice/text commands.
 
