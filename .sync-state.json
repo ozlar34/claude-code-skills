@@ -1,15 +1,12 @@
 {
   "version": 1,
-  "synced_at": "2026-06-19T23:04:51Z",
+  "synced_at": "2026-06-21T15:48:17Z",
   "skills": {
     "sell": {
       "sha256": "95e958e084b5705d86d731163b50a1c30793ceb1de648b50d8e0183f36aa4f23"
     },
     "session-handoff": {
-      "sha256": "baf099f4e94ebce9709aac1bd420d1f8039a2484b5e929fb58c3ef783dafdb99"
-    },
-    "coffee": {
-      "sha256": "e0b867cf12831f81e31b17e654227bb01c2269c19ffe2400f2560ad9c93a82be"
+      "sha256": "a374567a6ea6802f8d2cb9b955b91e098843ccf487cfed54b4f5e2a783cf73bf"
     },
     "gaming": {
       "sha256": "29895260f0d9ee1c361cb74bc35126a3ac1167b3f4412582e7d8bea9b696f607"
@@ -27,7 +24,7 @@
       "sha256": "72cf7a471081b25c03202393257ea7fbbdb62290bc3666d53f5a2d3927df7c83"
     },
     "github-polish": {
-      "sha256": "efd4f5f9aa0d8736e2d1eea76efa1354227877dc82cdc0a2bcd7633ac33d084f"
+      "sha256": "9bb04552ec786929e5cc6ded185b984c305451b0cecfe7afe15bf12ce9a67bb8"
     }
   }
 }

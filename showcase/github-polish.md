@@ -55,6 +55,8 @@ A precise, ordered todo list of the UI-only things: recommended pin order with r
 
 **6. Verify embedded assets resolve before declaring done.** A README that references `docs/banner.png` on the wrong branch shows a broken-image icon — a worse look than no image. One `curl` per asset closes that gap.
 
+**7. Idempotency: a re-run on a polished repo is a verify pass, not a redo.** Before rendering or committing anything, check whether it already exists and is current — sha256 on rendered assets, HTTP 200 on embedded images. A churn commit of identical bytes, or a rewrite of a fine README, is the same kind of noise as a faked screenshot. On an already-polished repo, the correct output is a no-op verify report.
+
 ## What I'd change to publish this
 
 A runnable version would need:

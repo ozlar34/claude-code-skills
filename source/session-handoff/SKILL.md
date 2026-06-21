@@ -45,11 +45,14 @@ Walk this checklist. Each bucket maps to a tag or section in the block:
 
 ### 2. Decide path
 
-**2a. Active GSD phase? → delegate to `/gsd-pause-work`.**
+**2a. Active GSD phase? → delegate to `/gsd-pause-work` (if installed).**
 
 Detection: `PLAN.md` exists in `.planning/phase-*/` but no `SUMMARY.md` in the same dir = phase active.
 
-If yes, stop and output: "Active GSD phase at `<path>`. Use `/gsd-pause-work` (phase-aware, produces PAUSE.md) — or confirm to proceed with session-handoff." Don't continue until confirmed; don't silently produce a parallel handoff.
+If yes, also check whether GSD is installed in this repo: `test -f ./.claude/get-shit-done/VERSION`.
+
+- **GSD installed**: stop and output: "Active GSD phase at `<path>`. Use `/gsd-pause-work` (phase-aware, produces PAUSE.md) — or confirm to proceed with session-handoff." Don't continue until confirmed; don't silently produce a parallel handoff.
+- **GSD not installed**: stop and output: "Active GSD phase detected at `<path>`, but GSD is not installed in this repo (`.claude/get-shit-done/VERSION` missing). Run `/gsd-install` to enable `/gsd-pause-work`, or confirm to proceed with session-handoff instead." Don't continue until confirmed.
 
 **2b. Pick mode.**
 
@@ -116,7 +119,8 @@ One Bash call (substitute `<filename>` with the file written in Step 3):
 ```bash
 pbcopy < ~/.claude/handoffs/<filename>.md && \
 cp ~/.claude/handoffs/<filename>.md ~/.claude/handoffs/latest.md && \
-echo "Saved → ~/.claude/handoffs/<filename>.md (latest.md updated, clipboard ready)"
+find ~/.claude/handoffs -name "????-??-??-????.md" -mtime +10 -delete && \
+echo "Saved → ~/.claude/handoffs/<filename>.md (latest.md updated, clipboard ready, >10d pruned)"
 ```
 
 Confirm with one line. Do not re-emit the block in chat — it's in the Write tool result and on disk.
