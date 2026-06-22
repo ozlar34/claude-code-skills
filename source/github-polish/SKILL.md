@@ -1,21 +1,20 @@
 ---
 name: github-polish
 description: >-
-  Make a public GitHub repo recruiter-ready — improve how it *presents* to recruiters /
-  hiring engineers / a job-search portfolio, not add features. In one mostly-autonomous
-  pass: sharpen topics + description, polish the README into a worked-example frame, add a
-  LICENSE if missing, commit and push every CLI-doable change, and hand back a GitHub-UI
-  checklist for what the API can't (pin order, social-preview upload, real screenshots). Use
-  whenever the user says "/github-polish <repo>", "polish / spruce up / make <repo> recruiter-
-  or portfolio-ready", "the README is weak", or points at one of their repos (bare name,
-  owner/repo, or URL) and wants it to look professional for the job search — even casually or
-  by outcome only ("this repo looks bare, fix it up").
+  Polish a public GitHub repo's presentation — sharpen topics + description, reframe the README as
+  a worked example, add a LICENSE if missing, commit and push every CLI-doable change, and hand
+  back a GitHub-UI checklist for what the API can't do (pin order, social-preview upload, real
+  screenshots). Not for adding features — for how the repo reads to anyone who opens it. Use
+  whenever the user says "/github-polish <repo>", "polish / spruce up / clean up <repo>",
+  "the README is weak", or points at one of their repos (bare name, owner/repo, or URL) and wants
+  it to look polished and professional — even casually or by outcome only ("this repo looks bare,
+  fix it up").
 ---
 
 # github-polish
 
-Make a public repo look like something a recruiter should take seriously — sharp metadata
-and a README that frames the work as a worked example, not an abandoned experiment.
+Give a public repo a clean, professional presentation — sharp metadata and a README that
+frames the work as a worked example, not an abandoned experiment.
 
 The job is **mostly autonomous**: survey, print one short plan, then do every CLI-doable thing
 in one pass without per-step approval. Only two things come back to the user: the actions
@@ -43,12 +42,12 @@ walkthrough, never fake it).
 
 ## Hard rules — the integrity of a public, named asset. Internalize the *why*.
 
-Violating any one damages a public, job-search-facing asset — the gap surfaces in the interview,
-which is worse than a plain repo.
+Violating any one damages a public, named asset — the gap surfaces eventually, and that's worse
+than a plain repo.
 
 1. **Honesty over polish.** Never fabricate a usage screenshot, invent a metric, or imply a
-   capability the repo lacks. A repo that oversells gets found out in an interview. If the honest
-   move is a real capture you can't do, write a capture walkthrough for the UI todo list instead.
+   capability the repo lacks. A repo that oversells gets found out eventually. If the honest move
+   is a real capture you can't do, write a capture walkthrough for the UI todo list instead.
 2. **No private data in public assets.** Placeholder data only (`Company A`–`I`, generic roles,
    round-number stats). Scrub real names, paths, emails, keys, internal URLs before anything is
    committed. When in doubt, genericize.
@@ -58,7 +57,7 @@ which is worse than a plain repo.
 4. **A README that lies is worse than one that's ugly.** Surgical edits only. NEVER "fix" a
    path/command without verifying it's actually stale (read the tree, run it, check the file
    exists). A confidently wrong README is a credibility hit.
-5. **Surgical, read-before-edit, conservative.** Touch only what makes the repo recruiter-ready.
+5. **Surgical, read-before-edit, conservative.** Touch only what improves presentation.
    No refactors, no reformatting untouched sections, no deleting what you didn't add. Match the
    repo's voice.
 
@@ -148,7 +147,7 @@ Close with a clear, ordered todo list of what only the human + web UI can do —
 exact UI locations:
 
 - **Pin order** — which repos to pin and in what order, one-line reasoning each (lead with the
-  strongest for the current job-search track).
+  strongest for the user's profile).
 - **Social-preview image** — *Settings → General → Social preview → Upload an image*. `gh` can't
   do this (rule 3). If the rendering add-on is installed and you produced a card in step **d**,
   give the exact staged PNG path to upload. Otherwise any 1280×640 image works (and the add-on

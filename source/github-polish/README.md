@@ -1,13 +1,13 @@
 # github-polish
 
-**Trigger:** `/github-polish <repo>`, "polish / spruce up <repo>", "make <repo> recruiter-ready",
+**Trigger:** `/github-polish <repo>`, "polish / spruce up <repo>", "make <repo> well-presented",
 "this repo looks bare, fix it up"
 
-**What it does:** One mostly-autonomous pass that makes a public GitHub repo look like something a
-recruiter should take seriously — sharp topics + description, a README reframed as a *worked
-example*, a LICENSE if one's missing — then hands back a precise checklist of the things only the
-GitHub web UI can do. It runs between two gates: **one plan up front, one handback at the end**,
-and everything in between executes without per-step approval.
+**What it does:** One mostly-autonomous pass that gives a public GitHub repo a clean, professional
+presentation — sharp topics + description, a README reframed as a *worked example*, a LICENSE if
+one's missing — then hands back a precise checklist of the things only the GitHub web UI can do.
+It runs between two gates: **one plan up front, one handback at the end**, and everything in
+between executes without per-step approval.
 
 The default path is a **portable core** whose only dependency is an authenticated GitHub CLI — no
 Python, no rendering toolchain. An **optional rendering add-on** ([`render/`](./render)) adds
@@ -19,8 +19,8 @@ The non-obvious thing this skill gets right is a **hard CLI/UI boundary backed b
 rules**. It knows exactly what `gh` can and can't do, and it never pretends a UI-only action (pin
 order, social-preview upload) is done — those always route to a human handback. And it's built to
 *not oversell*: never a faked screenshot, never an invented metric, never a "fixed" path it didn't
-verify is actually stale. For a job-search-facing repo that's the whole point — an oversold repo
-gets found out in the interview, which is worse than a plain one.
+verify is actually stale. An oversold repo gets found out eventually — that's worse than a plain
+one.
 
 **Install (the fast path):** hand the repo link to your coding assistant —
 
