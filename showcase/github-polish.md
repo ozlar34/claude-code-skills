@@ -1,6 +1,6 @@
 # github-polish
 
-**Status:** Showcase only. Source not published — it renders against a private brand template (my accent palette, glyph set, card/banner/diagram specs) and assumes a particular asset directory + `gh` auth. The *workflow* — survey, plan, autonomous CLI pass, honest UI handback — is the transferable part. This very repo's social card and banner were produced by it.
+**Status:** This page documents the **full branded version**, which stays showcase-only — it renders against a private brand template (my accent palette, glyph set, card/banner/diagram specs) and assumes a particular asset directory. The *workflow* — survey, plan, autonomous CLI pass, honest UI handback — is the transferable part, and this very repo's social card and banner were produced by it. A **portable, `gh`-only core is now runnable** at [`source/github-polish`](../source/github-polish): everything below *except* the branded rendering, with zero dependencies beyond an authenticated `gh`. The rendering is held back as an optional add-on on purpose — see *Reusable patterns* below.
 
 ## Problem
 
@@ -63,6 +63,8 @@ A precise, ordered todo list of the UI-only things: recommended pin order with r
 **7. Idempotency: a re-run on a polished repo is a verify pass, not a redo.** Before rendering or committing anything, check whether it already exists and is current — sha256 on rendered assets, HTTP 200 on embedded images. A churn commit of identical bytes, or a rewrite of a fine README, is the same kind of noise as a faked screenshot. On an already-polished repo, the correct output is a no-op verify report.
 
 **8. Delegate the read-heavy survey; keep only the conclusion.** Diagnosis means ingesting a whole README, the file tree, and the metadata — a lot of tokens that compress to a short gap list. A subagent does the reading and returns *only* the structured gap report; the orchestrator never holds the file dumps, just the verdicts it acts on. Same principle as the digest trick — push the bulky part to where it doesn't cost you, surface only what drives a decision.
+
+**9. Layer for portability: a core that can't break, with the heavy part opt-in.** To make this skill runnable by anyone, I split it instead of shipping it whole. The [`gh`-only core](../source/github-polish) (metadata, README, LICENSE, handback) has zero heavy dependencies, so it can't fail in a stranger's environment; the branded rendering — which needs a headless browser and a personal brand spec a stranger doesn't have — is held back as an optional add-on. Forcing the renderer into the critical path would mean every install risks breaking, and a broken demo is a worse signal than a simple one. The general move: when productizing a personal tool, find the seam between the part that works everywhere and the part that needs *your* setup, ship the first as the default, and make the second opt-in. Pairs with an `INSTALL.md` written *for the installing agent* — hand over the repo link and the assistant does the setup labor, which is exactly what dissolves the "nobody will recreate my toolchain by hand" objection that kept the full version private.
 
 ## What I'd change to publish this
 

@@ -28,6 +28,7 @@ This repo splits skills into two folders by how reusable they actually are.
 | [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`session-handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
 | [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. The portable, store-agnostic cut; the full vault-wired version is in [showcase](#showcase--patterns-only). |
+| [`github-polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core; hand the repo link to your assistant and it installs itself. The branded-rendering version is in [showcase](#showcase--patterns-only). |
 
 ### Showcase — patterns only
 
@@ -39,7 +40,7 @@ This repo splits skills into two folders by how reusable they actually are.
 | [`log-reel`](./showcase/log-reel.md) | Notion | Ship-time logger for shipped content. Closes the gap between publish and tracker — dedupes against in-progress entries. |
 | [`triage`](./showcase/triage.md) | Obsidian / capture | Inbox triage with a `promote → flip → destruct` atomicity loop, a zero-write `hold` verdict, and a propose-then-review split (parallel per-item agents propose, a gated review pass executes). |
 | [`pack-trip`](./showcase/pack-trip.md) | TickTick / vault | Per-trip packing checklist from a canonical template — asks only the per-trip deltas, computes a clothing formula, writes one task with the items as a checklist. |
-| [`github-polish`](./showcase/github-polish.md) | GitHub automation | One mostly-autonomous pass to make a public repo recruiter-ready: metadata, README, branded card + banner. Hard CLI/UI boundary, honest-handback, no faked assets. |
+| [`github-polish`](./showcase/github-polish.md) | GitHub automation | One mostly-autonomous pass to make a public repo recruiter-ready: metadata, README, branded card + banner. Hard CLI/UI boundary, honest-handback, no faked assets. The portable `gh`-only core is now runnable in [source](#source--runnable). |
 
 ## Install (source skills)
 
@@ -50,6 +51,7 @@ cp -r source/sell ~/.claude/skills/
 cp -r source/claude-inbox ~/.claude/skills/
 cp -r source/session-handoff ~/.claude/skills/
 cp -r source/triage ~/.claude/skills/
+cp -r source/github-polish ~/.claude/skills/
 
 # Then read the SETUP.md in the copied folder for any placeholders to fill in.
 ```
