@@ -23,6 +23,7 @@ These skills follow the [Agent Skills](https://agentskills.io) open standard, pu
 | [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. Store-agnostic; wire it to your own vault or task manager. |
 | [`sell`](./source/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
+| [`learn-from-mistakes`](./skills/learn-from-mistakes) | Workflow | Scans session history for failure patterns (loops, corrected assumptions, avoidable extra steps), filters for generalizability, and proposes surgical CLAUDE.md additions — one concise imperative directive per pattern, shown in context for approval before anything is written. |
 
 ## Install
 
@@ -35,6 +36,7 @@ cp -r source/github-polish ~/.claude/skills/
 cp -r source/claude-inbox ~/.claude/skills/
 cp -r source/triage ~/.claude/skills/
 cp -r source/sell ~/.claude/skills/
+cp -r skills/learn-from-mistakes ~/.claude/skills/
 
 # Then read the SETUP.md in the copied folder for any placeholders to fill in.
 ```
