@@ -23,6 +23,7 @@ This repo splits skills into two folders by how reusable they actually are.
 
 | Skill | Category | One-liner |
 |---|---|---|
+| [`braindump`](./source/braindump) | Thinking | Develops a raw, half-formed idea through adaptive one-question-at-a-time dialogue — what it is, what could be done with it, the smallest next step. Scales depth to the idea; writes nothing. |
 | [`sell`](./source/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
 | [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`session-handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
@@ -44,6 +45,7 @@ This repo splits skills into two folders by how reusable they actually are.
 
 ```bash
 # Pick one
+cp -r source/braindump ~/.claude/skills/
 cp -r source/sell ~/.claude/skills/
 cp -r source/claude-inbox ~/.claude/skills/
 cp -r source/session-handoff ~/.claude/skills/

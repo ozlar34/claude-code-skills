@@ -23,8 +23,10 @@ A four-phase pipeline with a hard CLI/UI boundary and a small set of non-negotia
 
 > User: "/github-polish my-repo" (or "polish my-repo", or "this repo looks bare, fix it up")
 
-### 1 — Survey
+### 1 — Survey (delegated)
 Clone (or use cwd), read the metadata (`gh repo view --json …`), read the README end to end, the file tree, the languages, any existing diagrams. Diagnose against a known quality bar (my best shipped repos) — weak description, generic/missing topics, no LICENSE, wall-or-stub README, no worked-example framing, no social card, real structure that's never shown.
+
+Surveying is the context-heavy part — a whole README, the full file tree, and the metadata, all of which collapse to a short gap list. So it's **handed to a subagent** with an exact brief: "diagnose against this bar, return *only* this structured gap report — no file contents, no narration." The file dumps never land in the main window; the orchestrator gets the conclusion (description verdict, missing topics, README weaknesses, what's worth diagramming, private-data risks, paths to preserve verbatim) and acts on it. The one exception is `.` (cwd), where the main session already holds the repo, so it surveys inline. (Confirm the repo is **public** first — a private repo stops the run.)
 
 ### 2 — Plan
 Print **one** short prioritized plan, each item tagged `[CLI]` (I'll do it) or `[UI]` (goes to your todo list). This is the single approval surface. A `--dry-run` flag stops here — and the first run on any repo *is* a dry run, so the plan can be sanity-checked before edits.
@@ -36,6 +38,9 @@ Everything `[CLI]` in one pass, no per-step gates:
 - **Branded social card** (1280×640) — rendered from a per-repo config against the shared brand template; staged for UI upload (rule 3), never committed.
 - **README header banner** (1280×320) — the 4:1 letterhead *is* committed and embedded above the H1, so a visitor landing on the repo page sees the brand immediately (the social card only ever shows on share links).
 - **Architecture diagram** — only if there's real structure to show; otherwise skipped gracefully (rule 1 — don't invent architecture for a picture).
+- **Opportunistic extras** — conditional, grows over time:
+  - *Example-output shot (the "digest trick")* — if the repo *produces* a shareable artifact (an email, a report, a card), render the **real output template populated with placeholder data** and embed it as an honest "example output." It shows what the project actually emits without leaking real data or faking a screenshot (rules 1 + 2 in one move).
+  - *LICENSE* — if a public portfolio repo has none, flag it and offer MIT (my default). Added only on a clear yes, never silently.
 - **Verify every embedded image resolves** — `curl` each raw URL for a 200 before declaring done; a broken README image is worse than none.
 
 ### 4 — Handback ("your turn")
@@ -56,6 +61,8 @@ A precise, ordered todo list of the UI-only things: recommended pin order with r
 **6. Verify embedded assets resolve before declaring done.** A README that references `docs/banner.png` on the wrong branch shows a broken-image icon — a worse look than no image. One `curl` per asset closes that gap.
 
 **7. Idempotency: a re-run on a polished repo is a verify pass, not a redo.** Before rendering or committing anything, check whether it already exists and is current — sha256 on rendered assets, HTTP 200 on embedded images. A churn commit of identical bytes, or a rewrite of a fine README, is the same kind of noise as a faked screenshot. On an already-polished repo, the correct output is a no-op verify report.
+
+**8. Delegate the read-heavy survey; keep only the conclusion.** Diagnosis means ingesting a whole README, the file tree, and the metadata — a lot of tokens that compress to a short gap list. A subagent does the reading and returns *only* the structured gap report; the orchestrator never holds the file dumps, just the verdicts it acts on. Same principle as the digest trick — push the bulky part to where it doesn't cost you, surface only what drives a decision.
 
 ## What I'd change to publish this
 
