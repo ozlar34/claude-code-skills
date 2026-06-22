@@ -10,7 +10,7 @@ Each skill is packaged for reuse: copy the directory, fill in the `SETUP.md` pla
 
 ## Works across tools
 
-These skills follow the [Agent Skills](https://agentskills.io) open standard, published by Anthropic in December 2025. Any coding assistant that supports the standard — Cursor, OpenAI Codex CLI, Google Antigravity, GitHub Copilot, VS Code, JetBrains, and 20+ others — loads them from `~/.claude/skills/` without modification. Install once; they're available everywhere.
+These skills follow the [Agent Skills](https://agentskills.io) open standard, published by Anthropic in December 2025. Any coding assistant that supports the standard — Cursor, OpenAI Codex CLI, Google Antigravity, GitHub Copilot, and 20+ others — loads them from `~/.claude/skills/` without modification. Install once; they're available everywhere.
 
 ## Catalog
 
