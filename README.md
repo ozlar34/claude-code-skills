@@ -6,20 +6,9 @@ A handful of [Claude Code](https://www.anthropic.com/claude-code) skills I built
 
 Skills are markdown files under `~/.claude/skills/` that Claude Code auto-loads and triggers on natural-language matches. They let you turn repeated workflows into one-shot voice/text commands.
 
-Source skills are packaged for reuse: copy the directory, fill in the `SETUP.md` placeholders, and they run without depending on my private config.
-
-## Two tiers
-
-This repo splits skills into two folders by how reusable they actually are.
-
-| Folder | What it is | When to use |
-|---|---|---|
-| [`source/`](./source) | Sanitized, runnable skills. Copy a directory into `~/.claude/skills/` and follow the per-skill `SETUP.md`. | Genuinely portable — they don't assume anything about your private databases or APIs. |
-| [`showcase/`](./showcase) | Pattern walkthroughs only. No source code. | Skills tightly coupled to my private setup — Notion databases, my Obsidian vault, my task manager, my brand assets. The architecture and prompt design are the interesting parts; you'd rebuild against your own data anyway. |
+Each skill is packaged for reuse: copy the directory, fill in the `SETUP.md` placeholders, and it runs without depending on my private config.
 
 ## Catalog
-
-### Source — runnable
 
 | Skill | Category | One-liner |
 |---|---|---|
@@ -27,22 +16,10 @@ This repo splits skills into two folders by how reusable they actually are.
 | [`sell`](./source/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
 | [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`session-handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
-| [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. The portable, store-agnostic cut; the full vault-wired version is in [showcase](#showcase--patterns-only). |
-| [`github-polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. The pattern walkthrough is in [showcase](#showcase--patterns-only). |
+| [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. Store-agnostic; wire it to your own vault or task manager. |
+| [`github-polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. |
 
-### Showcase — patterns only
-
-| Skill | Category | One-liner |
-|---|---|---|
-| [`coffee`](./showcase/coffee.md) | Notion | Coffee bean inventory + brew log + recipe index across three Notion databases. Captures faults as a separate axis from descriptive flavor notes. |
-| [`gaming`](./showcase/gaming.md) | Notion | Video game library with auto-applied date side-effects (`Currently Playing` sets Date Started; `Complete` sets Date Finished). |
-| [`add-watch`](./showcase/add-watch.md) | Notion | Watch wishlist. Web-search-driven spec extraction into a typed Notion entry. |
-| [`log-reel`](./showcase/log-reel.md) | Notion | Ship-time logger for shipped content. Closes the gap between publish and tracker — dedupes against in-progress entries. |
-| [`triage`](./showcase/triage.md) | Obsidian / capture | Inbox triage with a `promote → flip → destruct` atomicity loop, a zero-write `hold` verdict, and a propose-then-review split (parallel per-item agents propose, a gated review pass executes). |
-| [`pack-trip`](./showcase/pack-trip.md) | TickTick / vault | Per-trip packing checklist from a canonical template — asks only the per-trip deltas, computes a clothing formula, writes one task with the items as a checklist. |
-| [`github-polish`](./showcase/github-polish.md) | GitHub automation | One mostly-autonomous pass to make a public repo recruiter-ready: metadata, README, branded card + banner. Hard CLI/UI boundary, honest-handback, no faked assets. The portable `gh`-only core is now runnable in [source](#source--runnable). |
-
-## Install (source skills)
+## Install
 
 ```bash
 # Pick one
@@ -57,12 +34,6 @@ cp -r source/github-polish ~/.claude/skills/
 ```
 
 Restart Claude Code (or open a new session). The skill auto-surfaces — invoke it with `/<skill-name>` or by triggering the natural-language pattern in its description.
-
-## Why no source for showcase skills?
-
-The showcase skills are wired into my private setup — Notion database/page IDs and select-option enums, my Obsidian vault layout, my task-manager project, my brand-asset templates. Sanitizing them into runnable templates means writing a `SETUP.md` that walks you through recreating my exact schema/vault/config piece-by-piece — which nobody is going to do, and which would still leave you debugging mismatches against your own data.
-
-What's actually useful from those skills is the *pattern*: schema-first MCP calls, status-driven date side-effects, dedup-before-create, fault tags as a separate axis from descriptive tags, ship-time capture vs post-hoc backfill, `promote → flip → destruct` atomicity, propose-then-review with parallel per-item agents, and an honest CLI/UI boundary for autonomous automation. Those are documented in each `showcase/<name>.md` walkthrough.
 
 ## More
 
