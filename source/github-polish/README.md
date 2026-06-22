@@ -9,10 +9,11 @@ example*, a LICENSE if one's missing — then hands back a precise checklist of 
 GitHub web UI can do. It runs between two gates: **one plan up front, one handback at the end**,
 and everything in between executes without per-step approval.
 
-This is the **portable core**. Its only dependency is an authenticated GitHub CLI — no Python, no
-rendering toolchain. (The original private version also renders a branded social card / banner /
-diagram for each repo; that layer is an optional add-on, documented in [SETUP.md](./SETUP.md), and
-not included here on purpose — see *Why layered* below.)
+The default path is a **portable core** whose only dependency is an authenticated GitHub CLI — no
+Python, no rendering toolchain. An **optional rendering add-on** ([`render/`](./render)) adds
+branded social cards, README banners, and architecture diagrams; it needs Python + a headless
+browser and is opt-in, installed separately only if you want the branded look — see *Why layered*
+below and [SETUP.md](./SETUP.md).
 
 The non-obvious thing this skill gets right is a **hard CLI/UI boundary backed by integrity
 rules**. It knows exactly what `gh` can and can't do, and it never pretends a UI-only action (pin
@@ -52,5 +53,6 @@ demo is a worse signal than a simple one. So the core can't break (gh-only), and
 is opt-in. That layering *is* the design judgment — build install-and-go for the common case, keep
 the powerful path optional.
 
-**Dependencies:** `gh` (authenticated), `git`, `curl`. All standard on a dev machine. See
-[SETUP.md](./SETUP.md) and [INSTALL.md](./INSTALL.md).
+**Dependencies:** core — `gh` (authenticated), `git`, `curl`, all standard on a dev machine.
+Optional rendering add-on — Python 3.8+ with Playwright + Chromium (`render/INSTALL-render.md`).
+See [SETUP.md](./SETUP.md) and [INSTALL.md](./INSTALL.md).

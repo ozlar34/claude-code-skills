@@ -28,7 +28,7 @@ This repo splits skills into two folders by how reusable they actually are.
 | [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`session-handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
 | [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. The portable, store-agnostic cut; the full vault-wired version is in [showcase](#showcase--patterns-only). |
-| [`github-polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core; hand the repo link to your assistant and it installs itself. The branded-rendering version is in [showcase](#showcase--patterns-only). |
+| [`github-polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. The pattern walkthrough is in [showcase](#showcase--patterns-only). |
 
 ### Showcase — patterns only
 

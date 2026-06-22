@@ -64,11 +64,14 @@ Then tell the user, in your own words:
 - It edits metadata, polishes the README, and offers a LICENSE; it then hands back a short
   checklist of GitHub-UI-only actions (pin order, social-preview upload) that the API can't do.
 
-## Step 5 — (Optional) mention the rendering add-on
+## Step 5 — (Optional) offer the rendering add-on
 
-This core renders no branded images on purpose. If the user wants on-brand social cards / banners
-generated automatically, point them to `source/github-polish/SETUP.md` in this repo — it covers
-the optional rendering layer and its extra setup. Don't install that unless they ask.
+This core renders no branded images on purpose. If the user wants on-brand social cards / banners /
+diagrams generated automatically, there's an optional rendering layer — but it pulls in Python +
+a headless browser (Playwright + Chromium), so install it **only if they ask**. To install it,
+follow `source/github-polish/render/INSTALL-render.md` (it installs the toolchain, copies
+`render/` into the skill dir, and self-tests by rendering the bundled example). Don't install it
+as part of the default setup.
 
 ---
 

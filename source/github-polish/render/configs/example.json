@@ -1,0 +1,34 @@
+{
+  "card": {
+    "accent": "#58a6ff",
+    "glyph": "🔭",
+    "name": "json-diff-tui",
+    "tag": "A terminal UI for diffing large JSON files, side by side",
+    "chips": ["Rust", "ratatui", "serde"],
+    "foot": "Single static binary · no runtime deps",
+    "owner": "your-username"
+  },
+  "banner": {
+    "tag": "Diff large JSON files in your terminal, side by side"
+  },
+  "flow": {
+    "repo": "json-diff-tui",
+    "title": "How a diff is computed",
+    "elements": [
+      {"type": "boxes", "boxes": [
+        {"title": "Parse", "lines": ["serde streaming reader", "two files → two trees"], "accent": "#58a6ff"},
+        {"title": "Normalize", "lines": ["stable key order", "canonical numbers"], "accent": "#58a6ff"}
+      ]},
+      {"type": "merge"},
+      {"type": "arrow"},
+      {"type": "boxes", "boxes": [
+        {"title": "Tree diff", "lines": ["recursive structural compare", "added / removed / changed"], "accent": "#d29922", "width": 420}
+      ]},
+      {"type": "note", "text": "Diff is computed once, then rendered incrementally as you scroll"},
+      {"type": "arrow"},
+      {"type": "boxes", "boxes": [
+        {"title": "TUI render", "lines": ["ratatui split panes", "synced scroll, color by change"], "accent": "#3fb950", "width": 420}
+      ]}
+    ]
+  }
+}

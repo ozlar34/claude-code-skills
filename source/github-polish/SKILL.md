@@ -22,12 +22,12 @@ in one pass without per-step approval. Only two things come back to the user: th
 GitHub gates behind the web UI, and any asset needing a real-world capture (you write the
 walkthrough, never fake it).
 
-> **Scope of this version.** This is the portable, `gh`-only core: metadata, README, LICENSE,
-> and an honest CLI/UI handback. It deliberately renders **no branded images** — branded
-> social cards / banners / diagrams need a rendering toolchain and a personal brand spec, which
-> belong to an optional add-on (see `SETUP.md`). The handback still tells the user how to add a
-> social preview by hand; it just doesn't generate one. Everything here runs with nothing but
-> an authenticated `gh`.
+> **Scope of this version.** The default path is the portable, `gh`-only core: metadata, README,
+> LICENSE, and an honest CLI/UI handback — everything here runs with nothing but an authenticated
+> `gh`, and can't break in your environment. Branded social cards / banners / diagrams are an
+> **optional rendering add-on** (Playwright + a brand spec; see `SETUP.md` and `render/`); when
+> it's installed, step **d** below activates. When it isn't, the core is complete on its own and
+> the handback simply tells the user how to add a social preview by hand.
 
 ## Invocation
 
@@ -126,6 +126,16 @@ already-polished repo the correct run is a no-op verify pass, reported as such.
 **c. LICENSE.** If a public portfolio repo has none, flag it and offer MIT (a safe default). Add
 only on a clear yes — never silently.
 
+**d. Branded assets — OPTIONAL, only if the rendering add-on is installed.** Check for it:
+`test -d <skill-dir>/render && test -f <skill-dir>/render/brand.py`. If absent, skip this step
+entirely — the core above is complete without it; do **not** tell the user assets were produced.
+If present, you may render an on-brand **social card**, README **banner**, and (only when there's
+real structure) an **architecture diagram**, all from one small per-repo config. Resolve the
+owner first (`gh api user --jq .login`) so the assets show the user's handle. Full schema, the
+accent palette, render commands, and where each file goes are in `render/brand-spec.md` — follow
+it. The integrity rules still bind: honest placeholder copy only, no faked diagrams, and the card
+is **staged for the user to upload** (the API can't — rule 3), never claimed as done.
+
 **Verify before done.** If the README references any committed image under `docs/` (e.g. one the
 user added themselves), `curl` each raw URL for a 200 before declaring done — a broken image is
 worse than none:
@@ -140,8 +150,9 @@ exact UI locations:
 - **Pin order** — which repos to pin and in what order, one-line reasoning each (lead with the
   strongest for the current job-search track).
 - **Social-preview image** — *Settings → General → Social preview → Upload an image*. `gh` can't
-  do this (rule 3). If the user wants an on-brand generated card here, that's the optional
-  rendering add-on (`SETUP.md`); otherwise any 1280×640 image works.
+  do this (rule 3). If the rendering add-on is installed and you produced a card in step **d**,
+  give the exact staged PNG path to upload. Otherwise any 1280×640 image works (and the add-on
+  in `SETUP.md` can generate an on-brand one).
 - **Real-usage captures** — if any asset needs a genuine screenshot, give a precise capture
   walkthrough (what to open, what state, what to frame, where to save). Never fabricate (rule 1).
 

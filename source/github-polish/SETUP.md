@@ -43,20 +43,38 @@ need an image-rendering toolchain and a personal brand spec — see the optional
 
 ## Optional — the branded rendering add-on
 
-The original (private) version of this skill renders a consistent **social card** (1280×640),
-README **banner** (1280×320), and **architecture diagram** for each repo, so a profile of repos
-reads as one visual family. That layer is **not included in this core** because it requires:
+This skill can also render a consistent **social card** (1280×640), README **banner**
+(1280×320), and **architecture diagram** for each repo, so a profile of repos reads as one
+visual family. It lives in [`render/`](./render) and is **opt-in** — it needs Python + a headless
+browser (Playwright + Chromium), which is exactly why it isn't in the core: the core can't break
+in your environment, this can.
 
-- A **rendering toolchain** — the original uses headless-browser rendering (Playwright + a cached
-  Chromium). Any renderer that takes a structured config and emits a consistent image works.
-- A **brand spec** — an accent palette, a glyph set, and the card/banner/diagram layout the
-  renderers draw against. This is the genuinely personal part; the *schema* (a per-repo JSON
-  config feeding shared renderers) is the transferable idea, not any one palette.
+The design is deliberately layered. Forcing a headless browser on every installer would be the
+wrong default, so the core works with nothing but `gh`, and the rendering is something you add
+only if you want the branded look. When `render/` is present next to `SKILL.md`, the skill's
+execute step **d** activates and produces the assets; when it isn't, the skill skips that step and
+never claims it made any.
 
-If/when the add-on ships in this repo, it'll live beside this file with its own setup. The design
-is intentionally layered: the core above can't break in your environment (no heavy deps), and the
-rendering is opt-in for those who want the branded look. Forcing a headless browser on every
-installer would be the wrong default.
+**Install it (fast path):** ask your coding assistant to follow
+[`render/INSTALL-render.md`](./render/INSTALL-render.md) — it installs Playwright + Chromium,
+copies `render/` into place, and **self-tests by rendering the bundled example config** before
+declaring success.
 
-Until then, you can still add a social preview by hand — any 1280×640 image, uploaded via
+**Install it by hand:**
+```bash
+python3 -m pip install --user playwright
+python3 -m playwright install chromium       # downloads a managed Chromium (a few hundred MB)
+cp -r render ~/.claude/skills/github-polish/render
+# verify:
+cd ~/.claude/skills/github-polish/render && python3 render_card.py configs/example.json /tmp/test.png
+```
+(If `pip` is externally managed, use a venv — see `render/INSTALL-render.md` for the fallback.)
+
+The look is driven by a per-repo JSON config; the schema, accent palette, and a full worked
+example are in [`render/brand-spec.md`](./render/brand-spec.md) and
+[`render/configs/example.json`](./render/configs/example.json). You change the accent, glyph, and
+copy per repo; the shared chrome keeps every repo on one family look. The palette ships as
+GitHub's own neutral dark theme — make it yours by editing `render/brand.py`.
+
+Without the add-on you can still add a social preview by hand — any 1280×640 image, uploaded via
 *Settings → General → Social preview* (the handback reminds you).
