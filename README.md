@@ -15,7 +15,7 @@ These skills follow the [Agent Skills](https://agentskills.io) open standard, pu
 ## Catalog
 
 | Skill | Category | One-liner |
-|---|---|---|
+|:---:|:---:|---|
 | [`braindump`](./source/braindump) | Thinking | Develops a raw, half-formed idea through adaptive one-question-at-a-time dialogue — what it is, what could be done with it, the smallest next step. Scales depth to the idea; writes nothing. |
 | [`second‑opinion`](./source/second-opinion) | Verification | Pull a fresh, independent Opus agent in to verify the last load-bearing claim the assistant made — confirmed / refuted / can't tell, with evidence. On-demand escalation for cheaper sessions; relays the verdict verbatim instead of rubber-stamping its own reasoning. |
 | [`session‑handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
@@ -42,8 +42,3 @@ cp -r skills/learn-from-mistakes ~/.claude/skills/
 ```
 
 Restart Claude Code (or open a new session). The skill auto-surfaces — invoke it with `/<skill-name>` or by triggering the natural-language pattern in its description.
-
-## More
-
-- [ozlar34/ozlar34](https://github.com/ozlar34) — profile and pinned projects
-- Skills not in this repo: 5 job-search skills wired into a private n8n + Supabase + Apify pipeline. Architecture lives in [job-match-radar](https://github.com/ozlar34/job-match-radar).
