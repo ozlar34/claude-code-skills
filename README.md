@@ -16,14 +16,14 @@ These skills follow the [Agent Skills](https://agentskills.io) open standard, pu
 
 | Skill | Category | One-liner |
 |---|---|---|
-|[`braindump`](./source/braindump) | Thinking | Develops a raw, half-formed idea through adaptive one-question-at-a-time dialogue — what it is, what could be done with it, the smallest next step. Scales depth to the idea; writes nothing. |
-| [`second-opinion`](./source/second-opinion) | Verification | Pull a fresh, independent Opus agent in to verify the last load-bearing claim the assistant made — confirmed / refuted / can't tell, with evidence. On-demand escalation for cheaper sessions; relays the verdict verbatim instead of rubber-stamping its own reasoning. |
-| [`session-handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
-| [`github-polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. |
-| [`claude-inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
+| [`braindump`](./source/braindump) | Thinking | Develops a raw, half-formed idea through adaptive one-question-at-a-time dialogue — what it is, what could be done with it, the smallest next step. Scales depth to the idea; writes nothing. |
+| <nobr>[`second-opinion`](./source/second-opinion)</nobr> | Verification | Pull a fresh, independent Opus agent in to verify the last load-bearing claim the assistant made — confirmed / refuted / can't tell, with evidence. On-demand escalation for cheaper sessions; relays the verdict verbatim instead of rubber-stamping its own reasoning. |
+| <nobr>[`session-handoff`](./source/session-handoff)</nobr> | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
+| <nobr>[`github-polish`](./source/github-polish)</nobr> | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. |
+| <nobr>[`claude-inbox`](./source/claude-inbox)</nobr> | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. Store-agnostic; wire it to your own vault or task manager. |
 | [`sell`](./source/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
-| [`learn-from-mistakes`](./skills/learn-from-mistakes) | Workflow | Scans session history for failure patterns (loops, corrected assumptions, avoidable extra steps), filters for generalizability, and proposes surgical CLAUDE.md additions — one concise imperative directive per pattern, shown in context for approval before anything is written. |
+| <nobr>[`learn-from-mistakes`](./skills/learn-from-mistakes)</nobr> | Workflow | Scans session history for failure patterns (loops, corrected assumptions, avoidable extra steps), filters for generalizability, and proposes surgical CLAUDE.md additions — one concise imperative directive per pattern, shown in context for approval before anything is written. |
 
 ## Install
 
