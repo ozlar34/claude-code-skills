@@ -38,7 +38,7 @@ Walk this checklist. Each bucket maps to a tag or section in the block:
 
 - `[mcp]` **mcp-writes**: Notion/TickTick/NotebookLM/Actual Budget drafts not yet pushed → At-risk row
 - `[vault]` **vault-writes**: Obsidian writes drafted in chat, not yet appended (CONTEXT.md, _decisions-log.md, hub, atomic note) → At-risk row
-- `[memory]` **memory-pending**: memory rules discussed but not yet saved to MEMORY.md → At-risk row
+- `[memory]` **memory-pending**: durable rules/facts discussed but not yet written to their scoped home (root or subtree `CLAUDE.md`, or the relevant vault note) → At-risk row
 - `[deferred]` **deferred**: Y from "do X then Y" still pending → At-risk row
 - **decisions**: concrete choices locked this session → "Decisions locked" section
 - **open-Qs**: decisions waiting on the user's input → "Open questions" section
@@ -90,7 +90,7 @@ Format below. **Sections with count = 0 are omitted entirely.** Situation, the `
 <Decisions waiting on the user's input>
 
 ## Pick up from here
-1. **Re-read first:** <absolute paths; include CONTEXT.md/_decisions-log.md if vault state changed>
+1. **Re-read first:** <absolute paths; include CONTEXT.md if vault state changed>
 2. **Next action:** <one sentence — exact first task for the new session>
 3. **Context not captured in files:** <anything in this conversation but nowhere on disk — prose>
 ```
