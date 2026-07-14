@@ -38,9 +38,9 @@ Three design choices drive that:
 >
 > Skill surfaces two candidates:
 > 1. `When the same grep fails twice, try searching from the repo root before varying the pattern.` → routes to `~/.claude/CLAUDE.md`
-> 2. `Before assuming a path resolves against cwd, check vault-paths.json first.` → routes to `personal-hub/CLAUDE.md`
+> 2. `Before assuming a path resolves against cwd, check vault-paths.json first.` → routes to `myproject/CLAUDE.md`
 >
-> User approves #2, drops #1. Skill writes one line to `personal-hub/CLAUDE.md`
+> User approves #2, drops #1. Skill writes one line to `myproject/CLAUDE.md`
 > and reports what was modified.
 
 "No generalizable patterns found" is a valid and good outcome — it means the
