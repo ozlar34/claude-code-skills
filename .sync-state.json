@@ -1,33 +1,15 @@
 {
   "version": 1,
-  "synced_at": "2026-06-22T14:06:12Z",
+  "synced_at": "2026-07-15T21:15:55Z",
   "skills": {
-    "braindump": {
-      "sha256": "a13af7f98be19f9951d35e36de42a3c566d70f69d5e4cc18e1a3261369cd41aa"
-    },
-    "sell": {
-      "sha256": "95e958e084b5705d86d731163b50a1c30793ceb1de648b50d8e0183f36aa4f23"
-    },
     "session-handoff": {
-      "sha256": "a374567a6ea6802f8d2cb9b955b91e098843ccf487cfed54b4f5e2a783cf73bf"
-    },
-    "gaming": {
-      "sha256": "29895260f0d9ee1c361cb74bc35126a3ac1167b3f4412582e7d8bea9b696f607"
-    },
-    "add-watch": {
-      "sha256": "b4a3e380afdb30f8d19f84d48f0fa220106a377c6f5990febc5b26551891b2cc"
-    },
-    "log-reel": {
-      "sha256": "14c7e771163dc8d99f9a32a1eb61ad895b0536f4398c32df279db8de3d471614"
+      "sha256": "2ea37d90519d0a7274ff8a895d8885f4c5b6b66e894d2257d66b71eb083a118a"
     },
     "triage": {
-      "sha256": "e93f09ce3904819ed275b895d8f97168b032687a99b8af3e625399bc4ceee001"
-    },
-    "pack-trip": {
-      "sha256": "72cf7a471081b25c03202393257ea7fbbdb62290bc3666d53f5a2d3927df7c83"
+      "sha256": "f7081aaea868c36b347550b22eb7278e9c1e6e08712a39b036a4292f75617b09"
     },
     "github-polish": {
-      "sha256": "9bb04552ec786929e5cc6ded185b984c305451b0cecfe7afe15bf12ce9a67bb8"
+      "sha256": "d656e51ba72d3b571eddee33a500c886c457cf241606ec50ac38fd826b49b781"
     }
   }
 }

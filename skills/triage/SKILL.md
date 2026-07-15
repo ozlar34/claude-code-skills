@@ -56,6 +56,7 @@ Resolve at session start (before any read or write):
 ```bash
 VAULT_PATHS="$HOME/<project>/.planning/vault-paths.json"
 VAULT_ROOT=$(jq -er '.vault_root' "$VAULT_PATHS")
+[ -d "$VAULT_ROOT" ] || { echo "vault-paths.json: resolved vault_root '$VAULT_ROOT' is not a directory on this host — refusing to guess" >&2; exit 1; }
 INBOX=$(jq -er '.inbox' "$VAULT_PATHS")
 RESOURCES=$(jq -er '.resources' "$VAULT_PATHS")
 AREAS=$(jq -er '.areas' "$VAULT_PATHS")
@@ -181,7 +182,9 @@ Resolve the system-fit signals **once per session** and cache them for the snaps
 RESOURCE_BUCKETS=$(ls -1 "$VAULT_ROOT/$RESOURCES" 2>/dev/null)
 # sed, NOT `xargs basename`: the vault root may contain an apostrophe,
 # which makes `xargs -I{} basename` fail with "unterminated quote" and silently empties the list.
-AREA_NOTES=$(ls -1 "$VAULT_ROOT/$AREAS"/*.md "$VAULT_ROOT/$SYSTEM"/*.md "$TOOL_BACKLOG" 2>/dev/null | sed -E 's#.*/##; s#\.md$##')
+# If Areas are foldered (`Areas/<X>/<X> Hub.md`), a flat glob silently misses every hub — glob
+# ONE level deep too (`Areas/*/*.md`); the flat glob still covers top-level area notes.
+AREA_NOTES=$(ls -1 "$VAULT_ROOT/$AREAS"/*.md "$VAULT_ROOT/$AREAS"/*/*.md "$VAULT_ROOT/$SYSTEM"/*.md "$TOOL_BACKLOG" 2>/dev/null | sed -E 's#.*/##; s#\.md$##')
 ```
 
 `RESOURCE_BUCKETS` currently resolves to subfolders like `Career, Citizenship, Claude, Coffee, Finance, German B1, Health, Home Office, Travel` — these are the buckets a `save` verdict would route into. `AREA_NOTES` are the candidate destinations for `act` and `backlog`.
@@ -226,7 +229,7 @@ Failure tolerance: if the Explore agent times out or returns nothing useful, tre
 
 With the scan + (optional) enrichment in hand, propose a verdict that names the **specific destination**, not just the verdict letter. The proposal is informational — Step 3 is the binding choice — but the more concrete the proposal, the cheaper the verdict is to confirm. Examples by verdict:
 
-- **save (reference)** → "Save as `Resources/Career/<proposed-title>.md` — will mint via obsidian-write; Naming Gate will confirm the final filename."
+- **save (reference)** → "Save as `Resources/Career/<proposed-title>.md` — will mint via obsidian-write; Naming Gate names the final filename (asks only if the pattern is ambiguous)."
 - **save (person)** → "Save as `People/<Name>.md` — subject IS a person; create-or-append `## Appearances`."
 - **save (place)** → "Save as `Places/<Place>.md` — subject IS a place; create-or-append `## Appearances`."
 - **save (long-form)** → "Save (long-form) → spawn a `/summarize` sub-agent on `<url>`; summary note minted inline, clipping archived on success."

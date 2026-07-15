@@ -67,7 +67,9 @@ than a plain repo.
 
 Surveying means reading the README end-to-end, the whole file tree, and the metadata — a lot of
 context that collapses to a short gap list. If your environment supports subagents, delegate it
-to one so that reading never lands in the main window; brief it to **return only the structured
+to one **pinned to a cheaper model** (e.g. pass `model: sonnet`) so that reading never lands in
+the main window — mechanical survey work shouldn't inherit an expensive session model. Brief it
+to **return only the structured
 gap report below**, no file contents, no narration. The exception is `.` (cwd), where the main
 session already holds the repo — survey inline then. If you can't delegate, survey inline but
 still distill to the report before acting.
@@ -130,7 +132,9 @@ only on a clear yes — never silently.
 entirely — the core above is complete without it; do **not** tell the user assets were produced.
 If present, you may render an on-brand **social card**, README **banner**, and (only when there's
 real structure) an **architecture diagram**, all from one small per-repo config. Resolve the
-owner first (`gh api user --jq .login`) so the assets show the user's handle. Full schema, the
+owner first (`gh api user --jq .login`) so the assets show the user's handle. Before picking an
+accent, check what's already taken across your other configs (`grep -h '"accent"' configs/*.json`)
+so sibling repos don't collide. Full schema, the
 accent palette, render commands, and where each file goes are in `render/brand-spec.md` — follow
 it. The integrity rules still bind: honest placeholder copy only, no faked diagrams, and the card
 is **staged for the user to upload** (the API can't — rule 3), never claimed as done.
