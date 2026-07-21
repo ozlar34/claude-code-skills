@@ -7,7 +7,7 @@ Two ways to install. Pick one.
 Paste this to Claude Code (or any coding assistant) in a fresh session:
 
 > Install the `github-polish` skill from https://github.com/ozlar34/claude-code-skills — follow
-> `source/github-polish/INSTALL.md` in that repo.
+> `skills/github-polish/INSTALL.md` in that repo.
 
 The assistant reads [INSTALL.md](./INSTALL.md), checks your `gh` auth, copies the skill into
 `~/.claude/skills/`, and tells you how to use it. That's the whole point of this version — the

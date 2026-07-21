@@ -43,7 +43,7 @@ Copy the `render/` directory next to the installed `SKILL.md`:
 
 ```bash
 # from a clone of the repo (see core INSTALL.md Step 3 for the clone)
-cp -r source/github-polish/render ~/.claude/skills/github-polish/render
+cp -r skills/github-polish/render ~/.claude/skills/github-polish/render
 ```
 
 (Substitute the skill path if the core was installed somewhere other than

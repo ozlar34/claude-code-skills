@@ -16,26 +16,26 @@ These skills follow the [Agent Skills](https://agentskills.io) open standard, pu
 
 | Skill | Category | One-liner |
 |:---:|:---:|---|
-| [`braindump`](./source/braindump) | Thinking | Develops a raw, half-formed idea through adaptive one-question-at-a-time dialogue — what it is, what could be done with it, the smallest next step. Scales depth to the idea; writes nothing. |
-| [`second‑opinion`](./source/second-opinion) | Verification | Pull a fresh, independent Opus agent in to verify the last load-bearing claim the assistant made — confirmed / refuted / can't tell, with evidence. On-demand escalation for cheaper sessions; relays the verdict verbatim instead of rubber-stamping its own reasoning. |
-| [`session‑handoff`](./source/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
-| [`github‑polish`](./source/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. |
-| [`claude‑inbox`](./source/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
-| [`triage`](./source/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. Store-agnostic; wire it to your own vault or task manager. |
-| [`sell`](./source/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
+| [`braindump`](./skills/braindump) | Thinking | Develops a raw, half-formed idea through adaptive one-question-at-a-time dialogue — what it is, what could be done with it, the smallest next step. Scales depth to the idea; writes nothing. |
+| [`second‑opinion`](./skills/second-opinion) | Verification | Pull a fresh, independent Opus agent in to verify the last load-bearing claim the assistant made — confirmed / refuted / can't tell, with evidence. On-demand escalation for cheaper sessions; relays the verdict verbatim instead of rubber-stamping its own reasoning. |
+| [`session‑handoff`](./skills/session-handoff) | Workflow | Generate a structured handoff block when context is hot, mid-stream. Persists to disk + clipboard so a fresh session can resume after `/clear`. |
+| [`github‑polish`](./skills/github-polish) | GitHub automation | Make a public repo recruiter-ready in one pass — topics, description, worked-example README, LICENSE, honest CLI/UI handback. `gh`-only core (hand the repo link to your assistant and it installs itself), plus an optional rendering add-on for branded social cards / banners / diagrams. |
+| [`claude‑inbox`](./skills/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
+| [`triage`](./skills/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. Store-agnostic; wire it to your own vault or task manager. |
+| [`sell`](./skills/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
 | [`learn‑from‑mistakes`](./skills/learn-from-mistakes) | Workflow | Scans session history for failure patterns (loops, corrected assumptions, avoidable extra steps), filters for generalizability, and proposes surgical CLAUDE.md additions — one concise imperative directive per pattern, shown in context for approval before anything is written. |
 
 ## Install
 
 ```bash
 # Pick one
-cp -r source/braindump ~/.claude/skills/
-cp -r source/second-opinion ~/.claude/skills/
-cp -r source/session-handoff ~/.claude/skills/
-cp -r source/github-polish ~/.claude/skills/
-cp -r source/claude-inbox ~/.claude/skills/
-cp -r source/triage ~/.claude/skills/
-cp -r source/sell ~/.claude/skills/
+cp -r skills/braindump ~/.claude/skills/
+cp -r skills/second-opinion ~/.claude/skills/
+cp -r skills/session-handoff ~/.claude/skills/
+cp -r skills/github-polish ~/.claude/skills/
+cp -r skills/claude-inbox ~/.claude/skills/
+cp -r skills/triage ~/.claude/skills/
+cp -r skills/sell ~/.claude/skills/
 cp -r skills/learn-from-mistakes ~/.claude/skills/
 
 # Then read the SETUP.md in the copied folder for any placeholders to fill in.

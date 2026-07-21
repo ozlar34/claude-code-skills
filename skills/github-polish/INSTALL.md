@@ -42,7 +42,7 @@ local checkout instead of a URL, skip the clone and copy from there.)
 TMP="$(mktemp -d)"
 git clone --depth 1 https://github.com/ozlar34/claude-code-skills "$TMP"
 mkdir -p ~/.claude/skills/github-polish
-cp "$TMP/source/github-polish/SKILL.md" ~/.claude/skills/github-polish/SKILL.md
+cp "$TMP/skills/github-polish/SKILL.md" ~/.claude/skills/github-polish/SKILL.md
 rm -rf "$TMP"
 ```
 
@@ -69,7 +69,7 @@ Then tell the user, in your own words:
 This core renders no branded images on purpose. If the user wants on-brand social cards / banners /
 diagrams generated automatically, there's an optional rendering layer — but it pulls in Python +
 a headless browser (Playwright + Chromium), so install it **only if they ask**. To install it,
-follow `source/github-polish/render/INSTALL-render.md` (it installs the toolchain, copies
+follow `skills/github-polish/render/INSTALL-render.md` (it installs the toolchain, copies
 `render/` into the skill dir, and self-tests by rendering the bundled example). Don't install it
 as part of the default setup.
 
