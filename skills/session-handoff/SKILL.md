@@ -1,11 +1,13 @@
 ---
 name: session-handoff
-description: Generate a structured mid-session handoff block. Use only when the user explicitly invokes /session-handoff. Persists to ~/.claude/handoffs/ and copies to clipboard so a fresh session can resume without losing state. Supports `--minimal` for a ~80-token bare-bones block.
+description: Generate a structured mid-session handoff block. Invoke proactively when remaining context drops to ~15% and meaningful task state would otherwise be lost; also on explicit /session-handoff. Persists to ~/.claude/handoffs/ and copies to clipboard so a fresh session can resume without losing state. Supports `--minimal` for a ~80-token bare-bones block.
 ---
 
 # Session Handoff
 
 Mid-session reset. Distinct from: `/done` (end-of-day), `/gsd-pause-work` (active GSD phase — prefer that; see Step 2a), `/gsd-session-report` (retrospective telemetry). Use when context is hot, a `/clear` is needed, and conversation state isn't yet on disk.
+
+**Autonomy note:** the description above triggers this skill automatically at ~15% remaining context, not just on explicit invocation. Prefer manual-only? Edit the `description:` frontmatter (line 3) to "Use only when the user explicitly invokes /session-handoff."
 
 Persisted handoffs live at `~/.claude/handoffs/<currentDate>-<HHMM>.md`, with `latest.md` as a pinned copy. A SessionStart hook surfaces `latest.md` if <2h old, so the next session finds it automatically.
 
@@ -119,7 +121,7 @@ One Bash call (substitute `<filename>` with the file written in Step 3):
 ```bash
 pbcopy < ~/.claude/handoffs/<filename>.md && \
 cp ~/.claude/handoffs/<filename>.md ~/.claude/handoffs/latest.md && \
-find ~/.claude/handoffs -name "????-??-??-????.md" -mtime +10 -delete && \
+find ~/.claude/handoffs \( -name "????-??-??-????.md" -o -name "????-??-??-????-min.md" \) -mtime +10 -delete && \
 echo "Saved → ~/.claude/handoffs/<filename>.md (latest.md updated, clipboard ready, >10d pruned)"
 ```
 
