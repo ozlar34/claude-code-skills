@@ -1,9 +1,9 @@
 {
   "version": 1,
-  "synced_at": "2026-07-21T10:54:26Z",
+  "synced_at": "2026-07-21T11:07:57Z",
   "skills": {
     "session-handoff": {
-      "sha256": "2ea37d90519d0a7274ff8a895d8885f4c5b6b66e894d2257d66b71eb083a118a"
+      "sha256": "e42e4e79fe851557f498b55442028e54b1a6ecc3c118a940bb0b628f1d6dabc0"
     },
     "triage": {
       "sha256": "0a22ccaec41a8cc2a5a6ddbf4a7313e86b986f4ad524d1aef2420b58e920e890"
