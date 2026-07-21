@@ -45,6 +45,7 @@ All vault paths come from `.planning/vault-paths.json` in the project dir. **Nev
 
 Keys consumed:
 - `vault_root` — absolute path to the Obsidian vault root
+- `vault_root_by_user` — *(optional)* per-user override map (`{ "<login>": "/abs/path/to/vault" }`) for when the same project dir syncs across machines with different home paths; the current user (`basename "$HOME"`) is looked up here first, falling back to `vault_root` when absent
 - `inbox` — where unprocessed clippings live (the only place this skill pulls from)
 - `resources` — `Resources/` (used only to *compose* resource-note bodies; actual write goes via `obsidian-write`)
 - `areas` — `Areas/` (used by `act` + `backlog` to list candidate area notes at runtime)
@@ -55,7 +56,7 @@ Resolve at session start (before any read or write):
 
 ```bash
 VAULT_PATHS="$HOME/<project>/.planning/vault-paths.json"
-VAULT_ROOT=$(jq -er '.vault_root' "$VAULT_PATHS")
+VAULT_ROOT=$(jq -er --arg u "$(basename "$HOME")" '.vault_root_by_user[$u] // .vault_root' "$VAULT_PATHS")
 [ -d "$VAULT_ROOT" ] || { echo "vault-paths.json: resolved vault_root '$VAULT_ROOT' is not a directory on this host — refusing to guess" >&2; exit 1; }
 INBOX=$(jq -er '.inbox' "$VAULT_PATHS")
 RESOURCES=$(jq -er '.resources' "$VAULT_PATHS")
@@ -553,7 +554,15 @@ descriptive label like `analyze: <basename>`.
 
 Parse each subagent's returned JSON. For any that returns malformed JSON or fails, substitute a
 safe fallback proposal `{verdict:"hold", confidence:"low", destination:"inbox", rationale:"analysis failed — re-run"}`
-so the clipping is never silently dropped. Then write the queue (tempfile-rename):
+so the clipping is never silently dropped.
+
+**Critical: even if every proposal is a fallback hold, proceed to A4 and push the full list.**
+Analysis failure ≠ empty inbox. The "inbox empty" notification path exists only in A1 (when
+`COUNT == 0` before any subagents run). If you reach A3 with N proposals — even N all-hold
+fallbacks — the inbox had N clippings; report them. Track `FAIL_COUNT` (the number of fallback
+substitutions) to surface in A4's header.
+
+Then write the queue (tempfile-rename):
 
 ```bash
 STAMP=$(date -u +%Y-%m-%dT%H:%M:%SZ)
@@ -604,6 +613,7 @@ Summary template (matching the rules above):
 ```
 🗂 Triage · <N> items
 <counts, e.g. 💾 2 save · 📥 2 backlog · 🗑 1 delete>
+[⚠ <FAIL_COUNT> analysis failed — re-run to retry]   ← omit this line if FAIL_COUNT == 0
 run: /triage review
 
 1 💾 <title clipped, no .md>
@@ -621,6 +631,7 @@ run: /triage review
 ### A5 — Close
 
 Print to the session: `Staged <N> proposals → Telegram. Run /triage review to confirm + execute.`
+If any analyses failed, name the count: `Staged <N> proposals (<FAIL_COUNT> analysis-failed holds) → Telegram.`
 Do **not** execute anything. Mode A ends here.
 
 ---
@@ -703,6 +714,7 @@ every executed item, then a session-total line. New clippings that arrived after
 - **Never** keep processing past 2 actionable verdicts in one session if the inbox still has items. The circuit-breaker (Step 8.5) is load-bearing — long sessions degrade verdict quality and burn tokens; a fresh `/clear` is cheaper than a sloppy `backlog`. `hold` does NOT count toward the budget; only `act`/`save`/`backlog`/`ignore` do.
 - **Never** truncate the read at Step 2a. The pre-v2 skill read only the first ~10 lines and was the root cause of "everything looks like backlog." The fit-scan needs the full body to produce a confident clear-fit/weak-fit/no-fit classification.
 - **Mode A writes nothing to the vault.** Its subagents are read-only proposers — no `mv`, `rm`, `processed` flip, or back-link. The only file Mode A writes is `.triage/pending.json`, which lives in the project dir, not the vault. If a propose run ever mutates a clipping or an Area note, the contract is broken.
+- **The "inbox empty" notification fires ONLY from A1, when `COUNT == 0` before any subagents run.** It must never be sent from A3, A4, or A5. If subagents all failed and every proposal is a fallback hold, the inbox is NOT empty — analysis failed. In that case A4 sends the full hold list with a `⚠ N analysis failed` header, and A5 prints `Staged N proposals (N analysis-failed holds) → …`. Never rationalize "nothing actionable = inbox empty."
 - **Mode B is the only path that may execute a `save`/`act`/`backlog`/`ignore` from a proposal**, and a proposed `ignore` (`rm`) may only fire after the B3 grouped delete gate. A proposal is a suggestion, never an authorization to delete — the human's confirm in B2/B3 is the authorization.
 - **`.triage/pending.json` is a transient working artifact, never vault content and never committed.** It is gitignored. Mode B drains it to empty and `rm`s it when the queue clears; a stale queue is just the next Review's starting point, not a problem.
 - **Before executing any proposal in Mode B, re-verify the clipping still exists in `Inbox/` and is `processed: false`.** Proposals can go stale (a capture race, or a parallel triage session). A stale proposal is skipped with a receipt, never forced.
