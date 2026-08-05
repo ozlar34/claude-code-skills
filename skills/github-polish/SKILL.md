@@ -51,6 +51,18 @@ than a plain repo.
 2. **No private data in public assets.** Placeholder data only (`Company A`–`I`, generic roles,
    round-number stats). Scrub real names, paths, emails, keys, internal URLs before anything is
    committed. When in doubt, genericize.
+   - **Sanitisation grep (mandatory, pre-commit — never skip).** Keep a per-repo pattern of the
+     private signals *this* repo must never leak, and run it over the working tree before any
+     commit or push, failing closed on any hit — a match blocks the commit until scrubbed:
+     ```
+     git grep -inE '<your private-signal pattern>' -- . ':!*.png'
+     ```
+     Zero hits is the only pass. Build the pattern from what would actually harm you if a reader
+     found it — personal identifiers, nationality- or health-adjacent signals, self-assessed
+     claims you'd never put on a CV, internal hostnames, client names. A public repo linked from
+     a CV or profile discloses whatever it contains to every reader, permanently and outside the
+     context you'd have chosen. Extend the pattern whenever a new private signal surfaces; never
+     narrow it.
 3. **Know the CLI/UI boundary.** `gh` owns topics, description, file commits, pushes — do those.
    `gh` *cannot* set pin order or upload a social-preview image — those are UI-only, go on the
    todo list every time, and are never faked via API.
