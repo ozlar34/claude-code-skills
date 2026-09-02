@@ -1,81 +1,96 @@
 ---
 name: learn-from-mistakes
-description: Run at the end of a session to extract generalizable failure patterns and propose surgical CLAUDE.md additions that prevent the same mistakes in future sessions. User-invocable only (via /learn-from-mistakes); does not auto-trigger. Distinct from /handoff (which captures project state) — this skill captures behavioral corrections, not work state.
+description: Run at the end of a session to extract wrong-mental-model failures (not inefficiencies) and propose surgical, cost-justified CLAUDE.md additions that prevent the same wrong action in future sessions. User-invocable only (via /learn-from-mistakes); does not auto-trigger. Distinct from /session-handoff (which captures work state) — this skill captures behavioral corrections.
+disable-model-invocation: true
 ---
 
 # Learn From Mistakes
 
-Scan this session's conversation history for failure patterns. Translate generalizable ones into concise imperative directives. Propose them for the user's approval before writing anything.
+Scan this session for a **single class** of failure: moments where Claude acted on a *wrong mental model* of how the user's systems, tools, or conventions actually work. Translate only the ones that clear a high cost bar into one-line imperative directives. Propose them as a single batched approval.
 
-## Step 1 — Identify failure patterns
+**The default outcome is "nothing cleared the bar this session."** Most sessions produce no rule. That is success, not failure. Every line added to an always-loaded CLAUDE.md is taxed on every future session in every project, forever — so the bar to add one is deliberately high. Proposing a marginal rule just to have something to show is the exact failure this skill must avoid.
 
-Scan the full conversation history for these signatures:
+## Step 1 — Find wrong-model mistakes only
 
-**Loops** — the same tool or approach was tried multiple times with minor variations before succeeding. Look for repeated Bash/Read/Edit calls on the same target, Claude proposing the same solution twice, or a multi-step sequence that was abandoned and restarted.
+Scan the conversation for moments where Claude **believed something false about how things work and acted on it** — then had to be corrected or course-correct. Signals:
 
-**Corrected assumptions** — the user had to explicitly correct something Claude got wrong. Signals: "no, actually...", "that's not how it works here", "you assumed...", "that's wrong because...", or any turn where the user negated or redirected Claude's previous assertion or action.
+- The user negated or redirected an assertion/action: "no, actually…", "that's not how it works here", "you assumed…", "that's wrong because…".
+- Claude operated on a wrong assumption about a path, file location, tool behavior, convention, or system structure, and the action had to be redone.
 
-**Avoidable extra steps** — a task that required significantly more tool calls or turns than its complexity warranted, where the excess traces to a wrong first move (wrong file looked at first, wrong tool chosen, wrong mental model of the system).
+**Loops, repeated greps, and "took more steps than needed" are NOT findings.** They are *clues*. When you see one, ask: *was there a wrong belief underneath it?*
+- If yes → the **belief** is the candidate (not the loop).
+- If no → it was a one-off bad day. Drop it. Do not turn it into a rule.
 
-For each pattern, note: what happened, what the correct behavior would have been, and whether it arose from a bad assumption, a missing check, or a wrong tool choice.
+A generic "don't loop" or "search more efficiently" rule is bloat by definition. Never propose one.
 
-## Step 2 — Filter: generalizable vs situational
+## Step 2 — Two-gate filter
 
-For each pattern, ask: **would this exact mistake plausibly recur in a different session on a different day?**
+Each candidate must pass **both** gates to earn an always-loaded slot. If it fails either, it is dropped or demoted to Tier-B (Step 3).
 
-Keep if yes. Drop if:
-- It was caused by genuinely ambiguous or one-off context (a file that's since been deleted, a confused user prompt that got clarified)
-- It's already covered by an existing rule in any CLAUDE.md
-- You're not confident it generalizes — err on the side of dropping
+1. **Wrong-action gate.** Would *not* having this rule cause Claude to take a substantively *wrong action* in a future session — not merely be slower or take an extra step? Efficiency misses fail here.
+2. **Cost gate.** Is the lesson a durable fact about *how the user's systems or conventions work* (broad blast radius), rather than syntax/API trivia that tooling already catches or that's hit-once-and-fixed-in-seconds? Trivia fails here.
 
-A small set of high-signal directives is worth more than a long list of marginal ones.
+Also drop if:
+- It's already covered by an existing rule in any CLAUDE.md (read the relevant CLAUDE.md to check — don't guess).
+- It arose from genuinely one-off context (a since-deleted file, a confused prompt that got clarified).
+- You're not confident it generalizes — **err on the side of dropping.**
 
-## Step 3 — Translate to directives
+**Final gate.** For each survivor, ask: *if this exact sentence had been in CLAUDE.md at the start of this session, would it have prevented the wrong action?* Anything short of a clear yes → rewrite or drop.
 
-For each surviving pattern, write one short imperative directive in the style of existing CLAUDE.md rules:
+## Step 3 — Route each survivor
 
-- Format: `Before [action], [check/verify something]` or `When [situation], [do this instead]`
-- Length: one sentence, 15 words max ideally
-- Voice: imperative, behavioral — what Claude should DO, not what Claude should know
-- No observations ("Claude sometimes assumes X") — only directives ("Before assuming X, check Y")
+- **Tier-A — always-loaded CLAUDE.md.** Passed both gates. Decide scope:
+  - `~/.claude/CLAUDE.md` — universal: a wrong assumption about how Claude Code itself works, or a cross-project convention.
+  - `[project]/CLAUDE.md` — specific to this project's structure, conventions, or tools.
+  - When in doubt between global and project, choose **project** — narrower scope is safer.
+- **Tier-B — existing pointer-loaded note.** A *real, recurring, narrow* fact/quirk that failed the cost gate (e.g. a genuine tool gotcha) but has an **obvious existing home**: that tool's `_System/Tool Notes/<tool>.md`, or the relevant project subtree note. Append there via `obsidian-write` (Step 5). **No obvious existing home → drop. Never create a new "gotchas" note** — that just relocates the bloat.
+- **Drop** — everything else, including all inefficiency patterns with no wrong-model root.
 
-**Examples of the right style:**
+## Step 4 — Write the directive
+
+One short imperative directive per survivor, in the style of existing CLAUDE.md rules:
+
+- Format: `Before [action], [check/verify X]` or `When [situation], [do this instead]`.
+- One sentence, ~15 words. Imperative and behavioral — what to DO, not what to know.
+- No observations ("Claude sometimes assumes X") — only directives ("Before assuming X, check Y").
+
+Right style:
 - `Before assuming a path resolves against cwd, check vault-paths.json first.`
 - `Before modifying a function, grep all callers.`
-- `When the same command fails twice, read the error output fully before retrying.`
 
-**Quality gate:** Ask yourself — *if this exact sentence had been in CLAUDE.md at the start of this session, would it have prevented the mistake?* If the answer is anything other than a clear yes, rewrite or drop.
+**Model-behavior vs. world-fact.** Ask what the correction compensates. If it patches *model behavior* (the model fabricates, over-defaults to optional, emits an AI tell, degrades at a task on a cheaper tier) rather than a durable *world-fact* (how a path, tool, or convention works), stamp the directive `(model, date)` and add a row to the **Crutch Register** (vault [[Claude Code Hub]] §Model-Release Molt) so the next release re-tests it. World-fact corrections are exempt — they don't molt with the model.
 
-## Step 4 — Route each directive
+## Step 5 — Present once, terse, and write on approval
 
-Decide where each directive belongs:
-
-- **~/.claude/CLAUDE.md** — universal behavioral rules that apply regardless of project (a wrong assumption about how Claude Code works, a general tool-use mistake, a reasoning pattern to avoid)
-- **[project]/CLAUDE.md** — patterns specific to this project's structure, conventions, or tools (a wrong assumption about vault paths, a project-specific workflow)
-- **Vault Tool Note** — if the mistake is about a specific tool's behavior, flag it as "suggest adding to Tool Notes for [tool]" rather than writing directly (Tool Notes are in the vault, outside this skill's write scope)
-
-When in doubt between global and project-level, choose project-level — narrower scope is safer.
-
-## Step 5 — Present for review
-
-For each proposed directive, show:
+Lead with the verdict in one line. If nothing cleared the bar, that is the whole output:
 
 ```
-[~/.claude/CLAUDE.md · Coding discipline section]
-
-  existing rule above...
-→ NEW: Before assuming X, verify Y.
-  existing rule below...
-
-Reason: [one sentence — what happened in this session that this prevents]
+Nothing cleared the bar this session.
 ```
 
-Group by target file. List how many total directives you found vs. how many you're proposing (this signals you applied the filter).
+Otherwise, show only what needs a decision — each proposal as a ready-to-approve diff with a **one-line** reason — then the dropped count as terse labels, in this shape:
 
-If you found no generalizable patterns, say so directly. That's a valid and good outcome.
+```
+Found N candidates. Proposing M.
 
-## Step 6 — Write approved items
+1. [~/.claude/CLAUDE.md · Coding discipline]
+   → Before assuming X, verify Y.
+   Reason: <one line — what this session's wrong action this prevents>
 
-Write only what the user explicitly approves. Use Edit, not Write — insert the directive into the right section of the target file without disturbing surrounding content.
+2. [Tool Notes/Codex.md] (Tier-B append)
+   → <directive>
+   Reason: <one line>
 
-Report in the end-of-turn summary: how many directives were proposed, how many approved, and which files were modified.
+Dropped N−M: <label>, <label>.
+
+Approve all? (or: which numbers)
+```
+
+Take a **single batched approval** — not one question per item. Approval is mandatory: never self-initiate a CLAUDE.md edit.
+
+On approval, write each item:
+- Tier-A → `Edit` (not Write) into the right section of the target CLAUDE.md, leaving surrounding content untouched.
+- Tier-B → `obsidian-write` append to the existing note.
+- Stamped `(model, date)` per Step 4 (a model-behavior crutch) → also append one row to the **Crutch Register** table in vault "Areas/Claude Code/Claude Code Hub.md" §Model-Release Molt, via `obsidian-write` (append, tempfile-rename discipline). Match the existing row format: `Pointer` = the directive's file/section, `Compensates (model behavior)` = one-line description of what it patches, `Observed` = `<model> · <date>`.
+
+Report in the end-of-turn summary: candidates found, proposed, approved, and which files were modified.

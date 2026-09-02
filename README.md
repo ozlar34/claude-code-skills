@@ -23,7 +23,7 @@ These skills follow the [Agent Skills](https://agentskills.io) open standard, pu
 | [`claude‑inbox`](./skills/claude-inbox) | Capture | Triage an Apple Reminders capture list one item at a time. Pair with a Siri shortcut for hands-free mobile capture. |
 | [`triage`](./skills/triage) | Capture | GTD-triage a captured-clippings inbox — analyze each, route, delete. Store-agnostic; wire it to your own vault or task manager. |
 | [`sell`](./skills/sell) | Web automation | Drives the Kleinanzeigen post-ad form via Playwright MCP. Fills every field, narrates German values back in English, stops before publish. |
-| [`learn‑from‑mistakes`](./skills/learn-from-mistakes) | Workflow | Scans session history for failure patterns (loops, corrected assumptions, avoidable extra steps), filters for generalizability, and proposes surgical CLAUDE.md additions — one concise imperative directive per pattern, shown in context for approval before anything is written. |
+| [`learn‑from‑mistakes`](./skills/learn-from-mistakes) | Workflow | Scans session history for wrong-mental-model failures (not inefficiencies), runs each through a two-gate cost filter, and proposes surgical CLAUDE.md additions — one ~15-word imperative directive per survivor, batched for approval before anything is written. "Nothing cleared the bar" is the expected common outcome. |
 
 ## Install
 

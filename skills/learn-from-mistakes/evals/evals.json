@@ -1,0 +1,26 @@
+{
+  "skill_name": "learn-from-mistakes",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/learn-from-mistakes",
+      "expected_output": "Drops the 4-grep loop (no wrong belief underneath it). Checks the project CLAUDE.md before proposing: the vault-paths.json rule already exists there, so the ~/Desktop/vault assumption is dropped as covered and the output is exactly 'Nothing cleared the bar this session.' If run in a project whose CLAUDE.md lacks that rule, proposes exactly one ~15-word imperative directive ('Before ..., check ...'), routes it to the project CLAUDE.md (not global), and asks for a single batched approval before any write.",
+      "files": [],
+      "context": "Simulated session where: (1) Claude assumed a file was at ~/Desktop/vault but user corrected it to use vault-paths.json, (2) Claude called grep 4 times with different patterns before finding the right one."
+    },
+    {
+      "id": 2,
+      "prompt": "/learn-from-mistakes",
+      "expected_output": "Output is exactly 'Nothing cleared the bar this session.' with no proposals and no reasoning paragraphs.",
+      "files": [],
+      "context": "Simulated session with only one-off situational errors: user asked about a file that was deleted, and a command failed due to a typo in the user's input."
+    },
+    {
+      "id": 3,
+      "prompt": "/learn-from-mistakes",
+      "expected_output": "Leads with 'Found 4 candidates. Proposing 2.' Each proposal is a numbered [target file · section] line, a one-sentence imperative directive, and a one-line reason. The 2 dropped candidates appear as terse labels only. Ends with a single batched 'Approve all? (or: which numbers)' and writes nothing before approval.",
+      "files": [],
+      "context": "Simulated session with 4 failure patterns: 2 clearly generalizable, 1 borderline, 1 obviously situational. Skill should propose 2, drop 2."
+    }
+  ]
+}
