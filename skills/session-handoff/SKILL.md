@@ -1,6 +1,6 @@
 ---
 name: session-handoff
-description: Generate a structured mid-session handoff block. Invoke proactively when remaining context drops to ~15% and meaningful task state would otherwise be lost; also on explicit /session-handoff. Persists to ~/.claude/handoffs/ and copies to clipboard so a fresh session can resume without losing state. Supports `--minimal` for a ~80-token bare-bones block.
+description: Generate a structured mid-session handoff block. Invoke proactively when remaining context drops to ~15% and meaningful task state would otherwise be lost; also on explicit /session-handoff. Persists to ~/.claude/handoffs/ and copies to clipboard so a fresh session can resume without losing state. Supports `--minimal` for a bare-bones block.
 ---
 
 # Session Handoff
@@ -101,7 +101,7 @@ Format below. **Sections with count = 0 are omitted entirely.** Situation, the `
 
 Same path scheme as 3a. Optional `-min` suffix to distinguish.
 
-Format — keep under ~80 tokens:
+Format — the three lines below, nothing more:
 
 ```
 # Session Handoff (minimal) — <currentDate> <HH:MM>
