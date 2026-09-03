@@ -433,7 +433,9 @@ If user supplies a title, call `mcp__ticktick__add_task` with:
 - `title` = user-supplied string
 - `content` = `From clipping [[<ARCHIVE_REL>]]:\n\n<bullet text from Step 4>`
 
-No date/priority — let the user shape it in TickTick.
+- `project` and date — check for any local TickTick routing rules or PreToolUse gates before defaulting to none; some setups hard-deny an incomplete task.
+
+No priority — let the user shape it in TickTick.
 
 If user says `skip`, no task is created. Either way, proceed to Step 8.
 
