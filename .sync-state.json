@@ -1,15 +1,15 @@
 {
   "version": 1,
-  "synced_at": "2026-09-03T00:00:00Z",
+  "synced_at": "2026-10-20T10:23:00Z",
   "skills": {
     "session-handoff": {
-      "sha256": "96ee0501301c0aadd0356636d4d65f52b6f89dba6256b1de076e7335ebfb6226"
+      "sha256": "f1a9404bdf7f68a8f7e62aebeff48218bd2707783e0035736d84eacc9ed9b9b8"
     },
     "triage": {
       "sha256": "473a0e9d7f4f064fc90fa5979761269b6592f70f3a17f8d30b88ea785a923a9d"
     },
     "github-polish": {
-      "sha256": "cb728351ebd0799e1bc2773cd82a176c3efe217d3b96ae96ccd8312fa656db3f"
+      "sha256": "1bc853c641d33b2e273dc29fa8d3ca97b07e328e0de62840b778f5eae83bf676"
     }
   }
 }
