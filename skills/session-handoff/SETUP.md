@@ -24,24 +24,44 @@ Or use `wl-copy` on Wayland.
 
 To make the *next* session automatically tell Claude there's a recent handoff, add a `SessionStart` hook.
 
+The hook lists every dated handoff from the last 2 hours, each with its one-line situation, rather than just pointing at `latest.md`. `latest.md` is a single slot the last writer wins, so if you run parallel sessions it can hold the *other* session's handoff; the list lets the new session pick the right one.
+
+It also prunes dated handoffs older than 10 days. That lives in the hook rather than the skill because a hook's shell isn't a tool call, so the delete never triggers a permission prompt mid-handoff. (Without the hook, nothing prunes; clear out `~/.claude/handoffs/` by hand now and then.)
+
 Create `~/.claude/hooks/handoff-resume-prompt.sh`:
 
 ```bash
 #!/usr/bin/env bash
-# SessionStart hook: surface ~/.claude/handoffs/latest.md if it's <2h old
-LATEST=~/.claude/handoffs/latest.md
-[ -f "$LATEST" ] || exit 0
+# SessionStart hook: list fresh (<2h) dated handoffs, prune ones >10d old.
+DIR="$HOME/.claude/handoffs"
+[ -d "$DIR" ] || exit 0
+find "$DIR" \( -name "????-??-??-????.md" -o -name "????-??-??-????-min.md" \) -mtime +10 -delete 2>/dev/null
+NOW=$(date +%s)
+ROWS=()
 
-# How old is it?
-AGE_SECONDS=$(($(date +%s) - $(stat -f %m "$LATEST" 2>/dev/null || stat -c %Y "$LATEST")))
-[ "$AGE_SECONDS" -gt 7200 ] && exit 0  # >2h, skip
+for f in $(ls -t "$DIR"/[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9].md 2>/dev/null); do
+  MTIME=$(stat -f %m "$f" 2>/dev/null || stat -c %Y "$f" 2>/dev/null) || continue
+  AGE=$((NOW - MTIME))
+  [ "$AGE" -lt 7200 ] || break   # ls -t is newest-first, so the rest are older
+  # First sentence of the Situation section, capped at 160 chars.
+  SIT=$(awk '/^## Situation/{getline; while ($0=="") getline; print; exit}' "$f" \
+        | sed -E 's/\. .*/./' | cut -c1-160)
+  ROWS+=("- \`~/.claude/handoffs/$(basename "$f")\` ($((AGE / 60)) min ago) — ${SIT:-no situation line}")
+done
 
-cat <<EOF
-## Session Handoff Available
+[ "${#ROWS[@]}" -gt 0 ] || exit 0
 
-A recent handoff exists at \`~/.claude/handoffs/latest.md\` (saved $((AGE_SECONDS / 60)) minutes ago).
-Read it to resume mid-stream work.
-EOF
+echo "## Recent session handoff available"
+echo ""
+if [ "${#ROWS[@]}" -eq 1 ]; then
+  echo "One handoff from the last 2h:"
+else
+  echo "**${#ROWS[@]} handoffs from the last 2h — likely parallel sessions.** \`latest.md\` holds only the newest; pick the one that matches what the user is resuming (ask if unclear):"
+fi
+echo ""
+printf '%s\n' "${ROWS[@]}"
+echo ""
+echo "If resuming work, read the matching file first — it captures the state the prior session didn't get onto disk."
 ```
 
 Make it executable:
@@ -72,7 +92,7 @@ Wire it into Claude Code by adding to your `~/.claude/settings.json`:
 
 If you already have other hooks, merge instead of overwrite.
 
-After this, every new session that starts within 2 hours of a handoff will see the prompt.
+After this, every new session that starts within 2 hours of a handoff will see it listed.
 
 ## 4. Restart Claude Code and try it
 

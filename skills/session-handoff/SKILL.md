@@ -9,7 +9,7 @@ Mid-session reset. Distinct from: `/done` (end-of-day), `/gsd-pause-work` (activ
 
 **Autonomy note:** the description above triggers this skill automatically at ~15% remaining context, not just on explicit invocation. Prefer manual-only? Edit the `description:` frontmatter (line 3) to "Use only when the user explicitly invokes /session-handoff."
 
-Persisted handoffs live at `~/.claude/handoffs/<currentDate>-<HHMM>.md`, with `latest.md` as a pinned copy. A SessionStart hook surfaces `latest.md` if <2h old, so the next session finds it automatically.
+Persisted handoffs live at `~/.claude/handoffs/<currentDate>-<HHMM>.md`, with `latest.md` as a pinned copy. An optional SessionStart hook lists every dated handoff <2h old (with its situation line), so the next session finds the right one even when parallel sessions overwrote `latest.md`.
 
 ## Modes
 
@@ -121,15 +121,14 @@ One Bash call (substitute `<filename>` with the file written in Step 3):
 ```bash
 pbcopy < ~/.claude/handoffs/<filename>.md && \
 cp ~/.claude/handoffs/<filename>.md ~/.claude/handoffs/latest.md && \
-find ~/.claude/handoffs \( -name "????-??-??-????.md" -o -name "????-??-??-????-min.md" \) -mtime +10 -delete && \
-echo "Saved → ~/.claude/handoffs/<filename>.md (latest.md updated, clipboard ready, >10d pruned)"
+echo "Saved → ~/.claude/handoffs/<filename>.md (latest.md updated, clipboard ready)"
 ```
 
 Confirm with one line. Do not re-emit the block in chat — it's in the Write tool result and on disk.
 
 ### 5. Stop
 
-After the clipboard copy, STOP. Do not continue working. Do not ask "what next?" — the user will `/clear`. The next session's `SessionStart` hook will surface `latest.md` automatically (if <2h old); otherwise paste from clipboard or read the file.
+After the clipboard copy, STOP. Do not continue working. Do not ask "what next?" — the user will `/clear`. The next session's `SessionStart` hook (if installed) will list the fresh dated handoffs automatically (if <2h old); otherwise paste from clipboard or read the file.
 
 ## Style rules
 

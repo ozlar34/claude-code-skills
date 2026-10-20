@@ -6,7 +6,7 @@
 
 The non-obvious thing this skill does is the **cognitive scan**: not just `git status`, but a checklist that distinguishes decisions you made, MCP/external writes that haven't been pushed yet, memory rules the user asked you to save, deferred follow-ups, and open questions waiting on the user. That's what makes a handoff useful versus a glorified `git diff`.
 
-A `--minimal` flag exists for emergency use when context is already critical — drops to ~80 tokens for the entire handoff.
+A `--minimal` flag exists for emergency use when context is already critical — drops to a three-line block: situation, next action, and what isn't on disk.
 
 **Setup:** see [SETUP.md](./SETUP.md). The skill works standalone; the optional auto-resume hook is one extra script.
 
@@ -22,7 +22,7 @@ A `--minimal` flag exists for emergency use when context is already critical —
 >
 > User: /clear
 >
-> *(in fresh session)* Skill auto-resumes from latest.md if <2h old, otherwise paste from clipboard.
+> *(in fresh session)* The hook lists handoffs from the last 2h (one per parallel session) so Claude reads the right one; otherwise paste from clipboard.
 
 **Why it exists:** Long Claude Code sessions accumulate state — files modified, MCP writes drafted, memory rules discussed, decisions made — that lives in the conversation but not on disk. `/clear` is a hard reset; without a structured handoff, you lose all of it. With one, the new session resumes mid-stream with full context in ~one screen of markdown.
 
@@ -31,4 +31,4 @@ The skill exists separately from `/done` (end-of-day wrap-up) and any phase-spec
 **Dependencies:**
 - macOS `pbcopy` (or substitute `xclip` / `wl-copy` on Linux — edit Step 4)
 - `~/.claude/handoffs/` directory (created on first use)
-- (Optional) SessionStart hook for auto-resume — see SETUP.md
+- (Optional) SessionStart hook for auto-resume + 10-day pruning — see SETUP.md
