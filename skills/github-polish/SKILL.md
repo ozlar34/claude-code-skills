@@ -79,7 +79,7 @@ than a plain repo.
 
 Surveying means reading the README end-to-end, the whole file tree, and the metadata — a lot of
 context that collapses to a short gap list. If your environment supports subagents, delegate it
-to one **pinned to a cheaper model** (e.g. pass `model: sonnet`) so that reading never lands in
+to one **pinned to a cheap, fast model** (e.g. pass `model: haiku`) so that reading never lands in
 the main window — mechanical survey work shouldn't inherit an expensive session model. Brief it
 to **return only the structured
 gap report below**, no file contents, no narration. The exception is `.` (cwd), where the main
